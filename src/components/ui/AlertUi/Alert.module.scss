@@ -1,0 +1,42 @@
+.alert {
+  position: fixed;
+  padding: 15px;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  min-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  animation: slideIn 0.3s ease-out;
+
+  :global(.ant-alert-close-icon) {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    padding: 0;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 16px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: scale(1.2);
+      color: #ff4d4f !important;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

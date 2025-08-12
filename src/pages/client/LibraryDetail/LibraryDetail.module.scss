@@ -1,0 +1,252 @@
+.library-detail {
+  padding: 12px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 64px);
+
+  .header {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+
+    .header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+
+        .ant-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+          }
+
+          &.ant-btn-dangerous {
+            &:hover {
+              background: #ff4d4f;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+
+    .back-button {
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: #1890ff;
+        transform: translateX(-4px);
+      }
+    }
+
+    .library-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+
+      .folder-icon {
+        font-size: 48px;
+        color: #1890ff;
+        padding: 16px;
+        background: rgba(24, 144, 255, 0.1);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+          background: rgba(24, 144, 255, 0.15);
+        }
+      }
+
+      .info {
+        flex: 1;
+
+        h2.ant-typography {
+          margin: 0 0 12px;
+          color: #262626;
+          font-size: 24px;
+          font-weight: 600;
+
+          &:hover {
+            color: #1890ff;
+          }
+        }
+
+        .ant-typography {
+          &.ant-typography-secondary {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            display: block;
+          }
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding-top: 16px;
+          border-top: 1px solid #f0f0f0;
+
+          .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          }
+
+          .ant-typography {
+            color: #595959;
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    .section-title {
+      margin-bottom: 24px;
+      color: #075aa8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ant-row {
+      .ant-col {
+        height: 100%;
+        margin-bottom: 16px;
+
+        // Make cards same width
+        .ant-card {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .document-card {
+    height: 100%;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    .document-content {
+      padding: 16px;
+      height: 220px; // Fixed height for card content
+      display: flex;
+      flex-direction: column;
+
+      h4.ant-typography {
+        margin-bottom: 8px;
+        font-size: 16px;
+        line-height: 1.4;
+        height: 44px; // Fixed height for 2 lines of title
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      .ant-typography {
+        &[class*="paragraph"] {
+          margin-bottom: 8px;
+          height: 40px; // Fixed height for description
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          color: #666;
+        }
+      }
+
+      .document-meta {
+        margin-top: auto; // Push meta section to bottom
+
+        .ant-tag {
+          margin-bottom: 8px;
+        }
+
+        .stats {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 12px;
+          gap: 12px;
+          color: #8c8c8c;
+          font-size: 13px;
+
+          span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            .anticon {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  .pagination-container {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+@media (max-width: 768px) {
+  .library-detail {
+    padding: 16px;
+
+    .header {
+      padding: 16px;
+
+      .library-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    .content {
+      padding: 16px;
+    }
+  }
+}

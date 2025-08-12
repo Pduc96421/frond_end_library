@@ -1,0 +1,107 @@
+.reminder-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: -5px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  :global(.ant-card-body) {
+    padding: 0px;
+  }
+
+  .reminder-time-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -10px;
+    padding: 0 42px;
+
+    .time-display {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .date {
+        font-weight: 600;
+        color: #666;
+      }
+
+      .time {
+        font-weight: 600;
+        font-size: 3.1em;
+        color: #333;
+      }
+    }
+  }
+
+  .title {
+    margin-bottom: 2px !important;
+    color: #1a1a1a;
+    font-weight: 600;
+    padding: 0 56px;
+  }
+
+  .description {
+    padding: 0 56px;
+    margin-bottom: 5px;
+    color: #595959;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: flex-end;
+
+  .ant-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &.ant-btn-dangerous {
+      &:hover {
+        background-color: rgba(255, 77, 79, 0.1);
+        color: #ff4d4f;
+      }
+    }
+
+    .anticon {
+      font-size: 16px;
+    }
+  }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}

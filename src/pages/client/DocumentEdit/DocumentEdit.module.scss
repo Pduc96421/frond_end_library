@@ -1,0 +1,131 @@
+.edit-container {
+  padding: 24px;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
+
+  .edit-card {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f0;
+
+      h2 {
+        margin: 0;
+        margin-left: 16px;
+        font-size: 24px;
+        color: #333;
+      }
+
+      .back-button {
+        color: #666;
+
+        &:hover {
+          color: #1890ff;
+        }
+      }
+    }
+
+    .edit-form {
+      .ant-form-item {
+        margin-bottom: 24px;
+      }
+
+      .ant-upload-list-picture-card .ant-upload-list-item {
+        padding: 8px;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+      }
+
+      .preview-section {
+        margin: 24px 0;
+        padding: 16px;
+        background-color: #fafafa;
+        border-radius: 4px;
+
+        h3 {
+          margin-bottom: 16px;
+          color: #333;
+          font-size: 16px;
+        }
+
+        .preview-images {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+
+          .preview-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s;
+
+            &:hover {
+              transform: scale(1.05);
+            }
+          }
+        }
+      }
+
+      .submit-button {
+        margin-top: 32px;
+        text-align: center;
+
+        .ant-btn {
+          min-width: 200px;
+          height: 40px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .edit-container {
+    padding: 16px;
+
+    .edit-card {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+
+        h2 {
+          margin-left: 0;
+        }
+      }
+
+      .edit-form {
+        .preview-section {
+          .preview-images {
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}

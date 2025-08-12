@@ -1,0 +1,12 @@
+.home-container {
+  padding: 24px;
+  width: 100%;
+  overflow-x: hidden;
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+}

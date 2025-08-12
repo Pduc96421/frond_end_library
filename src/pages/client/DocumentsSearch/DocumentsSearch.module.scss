@@ -1,0 +1,153 @@
+.search-wrapper {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-header {
+  margin-bottom: 20px;
+
+  .search-title {
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+  }
+
+  .keyword {
+    color: #1890ff;
+    font-weight: 600;
+  }
+}
+
+.filters {
+  margin-bottom: 20px;
+}
+
+.content-filter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .title {
+    margin: 0;
+    margin-right: 8px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  .select-wrapper {
+    flex: 1;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    overflow: hidden;
+
+    &:hover {
+      border-color: #40a9ff;
+    }
+
+    :global {
+      .ant-select {
+        .ant-select-selector {
+          border: none !important;
+          box-shadow: none !important;
+          height: 38px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+.content-doc {
+  min-height: 300px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.doc-list {
+  .doc-item {
+    display: flex;
+    margin-bottom: 16px;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .doc-thumb {
+      width: 180px;
+      height: 200px;
+      margin-right: 16px;
+      overflow: hidden;
+      border-radius: 4px;
+
+      .preview-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .doc-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .doc-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      .doc-desc {
+        color: #666;
+        margin-bottom: 8px;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+      }
+
+      .doc-meta {
+        font-size: 15px;
+        color: #888;
+
+        span {
+          display: inline-block;
+          margin-right: 16px;
+
+          svg {
+            margin-right: -15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.like-btn {
+  padding: 0 8px;
+  color: rgba(0, 0, 0, 0.45);
+  
+  &:hover {
+    color: #1890ff;
+  }
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}

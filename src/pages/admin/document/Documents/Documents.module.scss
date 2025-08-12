@@ -1,0 +1,187 @@
+.approve{
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #45a049!important;
+  }
+}
+
+.reject{
+  background-color: #f44336;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e53935!important;
+  }
+}
+
+.card-wrapper {
+  .section {
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .toolbar {
+    .button-col {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .preview-image {
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .status {
+    cursor: pointer;
+    min-width: 90px;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .action-buttons {
+    button {
+      padding: 4px 8px;
+      height: 32px;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  :global {
+    .ant-card-head {
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 24px;
+
+      .ant-card-head-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    .ant-table-wrapper {
+      .ant-table {
+        .ant-table-cell {
+          vertical-align: middle;
+        }
+
+        .ant-table-thead > tr > th {
+          background-color: #fafafa;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .ant-dropdown {
+      .approve {
+        color: #52c41a;
+        
+        &:hover {
+          background-color: #f6ffed;
+        }
+
+        &[disabled] {
+          color: rgba(0, 0, 0, 0.25);
+          background-color: #f5f5f5;
+          cursor: not-allowed;
+        }
+      }
+
+      .reject {
+        color: #ff4d4f;
+
+        &:hover {
+          background-color: #fff1f0;
+        }
+
+        &[disabled] {
+          color: rgba(0, 0, 0, 0.25);
+          background-color: #f5f5f5;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .ant-tag {
+      &.ant-tag-success {
+        color: #52c41a;
+        background: #f6ffed;
+        border-color: #b7eb8f;
+      }
+
+      &.ant-tag-error {
+        color: #ff4d4f;
+        background: #fff1f0;
+        border-color: #ffccc7;
+      }
+
+      &.ant-tag-warning {
+        color: #faad14;
+        background: #fffbe6;
+        border-color: #ffe58f;
+      }
+    }
+
+    .ant-space {
+      gap: 8px !important;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .card-wrapper {
+    .toolbar {
+      .button-col {
+        justify-content: flex-start;
+      }
+    }
+
+    .preview-image {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .card-wrapper {
+    :global {
+      .ant-table {
+        font-size: 14px;
+
+        .ant-table-cell {
+          padding: 8px;
+        }
+      }
+    }
+  }
+}

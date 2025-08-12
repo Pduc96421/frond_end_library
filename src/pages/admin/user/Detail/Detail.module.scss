@@ -1,0 +1,314 @@
+.user-detail {
+  padding: 16px;
+
+  .detail-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+
+    :global(.ant-card-head) {
+      background-color: #f7f9fc;
+      border-bottom: 1px solid #eaedf3;
+
+      :global(.ant-card-head-title) {
+        font-size: 18px;
+        font-weight: 600;
+        color: #304156;
+      }
+    }
+  }
+
+  .user-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #eaedf3;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .user-avatar {
+      flex-shrink: 0;
+
+      .avatar-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #eaedf3;
+      }
+    }
+
+    .user-basicInfo {
+      flex: 1;
+      min-width: 0;
+
+      .fullName {
+        margin: 0 0 8px;
+        font-size: 24px;
+        font-weight: 600;
+        color: #304156;
+      }
+
+      .user-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        color: #606f85;
+        font-size: 14px;
+
+        .user-status {
+          display: inline-flex;
+          align-items: center;
+          padding: 2px 8px;
+          border-radius: 12px;
+          background-color: #f56c6c;
+          color: white;
+          font-weight: 500;
+
+          &.active {
+            background-color: #52c41a;
+          }
+        }
+
+        .user-email {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+        }
+      }
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  .user-detail-content {
+    margin-bottom: 24px;
+
+    .detail-tabs {
+      :global(.ant-tabs-nav) {
+        margin-bottom: 20px;
+      }
+
+      :global(.ant-tabs-tab) {
+        padding: 8px 16px;
+
+        &:global(.ant-tabs-tab-active) :global(.ant-tabs-tab-btn) {
+          color: #1890ff;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .personal-info {
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 16px;
+
+      .info-icon {
+        margin-right: 12px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+
+        .icon-primary {
+          color: #1890ff;
+        }
+      }
+
+      .info-content {
+        flex: 1;
+
+        .info-label {
+          display: block;
+          margin-bottom: 4px;
+          color: #8c8c8c;
+          font-size: 12px;
+        }
+
+        .info-value {
+          font-size: 14px;
+          font-weight: 500;
+          color: #303133;
+
+          &.download-count {
+            color: #1890ff;
+            font-weight: 600;
+          }
+        }
+
+        .email-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .email-text {
+            max-width: 250px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+
+          .verification-badge {
+            :global(.ant-badge-count) {
+              background-color: transparent;
+              box-shadow: none;
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .user-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px dashed #eaedf3;
+  }
+
+  .user-status-value {
+    font-weight: 500;
+
+    &.active {
+      color: #52c41a;
+    }
+
+    &.inactive {
+      color: #f56c6c;
+    }
+  }
+}
+
+// ...existing code...
+
+.user-documents {
+  padding: 16px 0;
+
+  :global {
+    .ant-table-wrapper {
+      .ant-table {
+        background: #fff;
+        border-radius: 8px;
+
+        .ant-table-thead > tr > th {
+          background: #f5f5f5;
+          font-weight: 600;
+        }
+
+        .ant-table-row {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .ant-badge {
+        .ant-badge-status-dot {
+          width: 8px;
+          height: 8px;
+        }
+
+        .ant-badge-status-text {
+          margin-left: 8px;
+          font-size: 14px;
+        }
+
+        &-status-warning {
+          .ant-badge-status-dot {
+            background: #faad14;
+          }
+        }
+
+        &-status-success {
+          .ant-badge-status-dot {
+            background: #52c41a;
+          }
+        }
+      }
+
+      .ant-table-pagination {
+        margin: 16px 0;
+        
+        .ant-pagination-total-text {
+          color: #666;
+        }
+      }
+
+      .ant-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        
+        .anticon {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .ant-empty {
+      padding: 40px 0;
+
+      .ant-empty-description {
+        color: #666;
+      }
+    }
+  }
+
+  .ellipsis-cell {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.user-documents {
+  :global {
+    .ant-table-body {
+      &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 3px;
+
+        &:hover {
+          background: #999;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,78 @@
+.page-404 {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.content-404 {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-code {
+  font-size: 150px;
+  font-weight: bold;
+  color: #2d3436;
+  margin: 0;
+  animation: floating 3s ease-in-out infinite;
+}
+
+.error-message {
+  margin-top: 2rem;
+}
+
+.error-message h2 {
+  font-size: 32px;
+  color: #2d3436;
+  margin-bottom: 1rem;
+}
+
+.error-message p {
+  color: #636e72;
+  font-size: 18px;
+  margin-bottom: 2rem;
+}
+
+.home-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #0984e3;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #0765b0;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(9, 132, 227, 0.3);
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 768px) {
+  .error-code {
+    font-size: 100px;
+  }
+  
+  .error-message h2 {
+    font-size: 24px;
+  }
+  
+  .error-message p {
+    font-size: 16px;
+  }
+}

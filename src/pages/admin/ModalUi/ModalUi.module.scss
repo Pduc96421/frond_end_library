@@ -1,0 +1,49 @@
+.category-form {
+  padding: 16px 0;
+
+  :global {
+    .ant-form-item {
+      margin-bottom: 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .ant-form-item-label {
+        padding-bottom: 8px;
+
+        label {
+          font-weight: 500;
+        }
+      }
+
+      .ant-input {
+        border-radius: 6px;
+
+        &:hover {
+          border-color: #40a9ff;
+        }
+
+        &:focus {
+          border-color: #40a9ff;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+
+    button {
+      min-width: 100px;
+    }
+
+    .cancel {
+      margin-left: 8px;
+    }
+  }
+}

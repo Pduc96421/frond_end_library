@@ -1,0 +1,19 @@
+.reminder-modal {
+  :global {
+    .ant-modal-body {
+      padding: 12px 24px;
+    }
+
+    .ant-table-thead > tr > th {
+      white-space: nowrap;
+    }
+
+    .ant-table-cell {
+      vertical-align: top;
+    }
+
+    .ant-tag {
+      margin: 4px 0;
+    }
+  }
+}

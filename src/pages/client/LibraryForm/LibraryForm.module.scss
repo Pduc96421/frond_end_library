@@ -1,0 +1,44 @@
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-bottom: 0;
+  margin-top: 24px;
+}
+
+:global {
+  // Override some Ant Design modal styles
+  .ant-modal-content {
+    padding: 24px;
+    border-radius: 8px;
+  }
+  
+  .ant-modal-header {
+    margin-bottom: 20px;
+  }
+  
+  .ant-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .ant-form-item-label > label {
+    font-weight: 500;
+  }
+  
+  .ant-input, .ant-input-textarea {
+    &:hover, &:focus {
+      border-color: #1890ff;
+    }
+  }
+  
+  .ant-input-textarea {
+    resize: none;
+  }
+  
+  // Count text styling for TextArea
+  .ant-input-textarea-show-count::after {
+    color: #8c8c8c;
+    font-size: 12px;
+  }
+}

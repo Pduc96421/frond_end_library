@@ -1,0 +1,88 @@
+.section {
+  padding: 16px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border: 1px solid #f0f0f0;
+
+  .filter-row {
+    .filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      label {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.85);
+      }
+
+      :global {
+        .ant-select {
+          .ant-select-selector {
+            border-radius: 6px;
+
+            &:hover {
+              border-color: #40a9ff;
+            }
+          }
+
+          &.ant-select-focused .ant-select-selector {
+            border-color: #40a9ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+          }
+        }
+
+        .ant-picker {
+          border-radius: 6px;
+
+          &:hover {
+            border-color: #40a9ff;
+          }
+
+          &.ant-picker-focused {
+            border-color: #40a9ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+          }
+
+          .ant-picker-input {
+            > input {
+              font-size: 14px;
+            }
+          }
+
+          .ant-picker-range-separator {
+            padding: 0 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .section {
+    padding: 12px;
+
+    .filter-row {
+      .filter-item {
+        margin-bottom: 12px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .section {
+    padding: 8px;
+
+    .filter-row {
+      margin: 0 -8px;
+    }
+  }
+}

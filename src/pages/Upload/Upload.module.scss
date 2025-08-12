@@ -1,0 +1,199 @@
+
+
+// Main upload container
+.uploadCard {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 24px auto;
+  overflow: hidden;
+  
+  .title {
+    margin-bottom: 24px;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 3px;
+    }
+  }
+  
+  .formSection {
+    padding: 16px 8px;
+  }
+}
+
+// Form elements styling
+.formLabel {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.textInput,
+.textArea,
+.categorySelect {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  
+  &:hover,
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.1);
+  }
+}
+
+// Upload dragger area styling
+.uploadDragger {
+  border-radius: 8px;
+  background-color: rgba(var(--primary-color), 0.02);
+  border: 2px dashed rgba(var(--primary-color), 0.3);
+  padding: 24px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-color), 0.05);
+  }
+  
+  :global(.ant-upload-drag-icon) {
+    color: var(--primary-color);
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  
+  :global(.ant-upload-text) {
+    color: var(--heading-color);
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  :global(.ant-upload-hint) {
+    color: var(--text-secondary)-color;
+    font-size: 14px;
+  }
+}
+
+// Selected file info styling
+.selectedFile {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background-color: rgba(var(--success-color), 0.1);
+  border-radius: 6px;
+  color: (var--success-color);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  
+  &:before {
+    content: '✓';
+    margin-right: 8px;
+    font-weight: bold;
+  }
+}
+
+// Tags styling
+.tagSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tagItem {
+  padding: 5px 10px;
+  border-radius: 16px;
+  background-color: rgba(var(--primary-color), 0.1);
+  color: (var--primary-color);
+  border: 1px solid rgba(var(--primary-color), 0.2);
+  margin-right: 0; // Override default margin
+  
+  &.addTag {
+    background-color: #fff;
+    border: 1px dashed rgba(var(--primary-color), 0.5);
+    cursor: pointer;
+    
+    &:hover {
+      background-color: rgba(var(--primary-color), 0.05);
+    }
+  }
+}
+
+.tagInput {
+  width: 100px;
+  margin-right: 0;
+  vertical-align: top;
+}
+
+// Submit button styling
+.submitButton {
+  height: 44px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(var(--primary-color), 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px auto 0;
+  
+  .uploadIcon {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    box-shadow: none;
+  }
+}
+
+// Switch styling
+.switchPublic {
+  &:global(.ant-switch-checked) {
+    background-color: var(--success-color);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .uploadCard {
+    max-width: 100%;
+    margin: 16px;
+  }
+  
+  .title {
+    font-size: 20px;
+  }
+  
+  .uploadDragger {
+    padding: 16px;
+    
+    :global(.ant-upload-drag-icon) {
+      font-size: 36px;
+    }
+    
+    :global(.ant-upload-text) {
+      font-size: 14px;
+    }
+    
+    :global(.ant-upload-hint) {
+      font-size: 12px;
+    }
+  }
+  
+  .submitButton {
+    width: 100%;
+  }
+}

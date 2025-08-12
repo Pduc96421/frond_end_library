@@ -1,0 +1,65 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 8px 12px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #e4e6eb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus-within {
+        border-color: rgb(0 168 136);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+}
+
+
+.search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    padding: 4px 8px;
+    color: #050505;
+
+    &::placeholder {
+        color: #65676b;
+    }
+}
+
+.search-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #65676b;
+    padding: 4px;
+    
+    &:hover {
+        color: rgb(0 168 136);
+    }
+}
+
+// Override Ant Design styles
+:global {
+  .ant-input-group-addon {
+    padding: 0;
+    background-color: #fff;
+  }
+  
+  .ant-select-selection-item {
+    font-size: 14px;
+  }
+  
+  .ant-input {
+    font-size: 14px;
+  }
+}

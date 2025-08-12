@@ -1,0 +1,202 @@
+.new-section {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  position: relative;
+  
+  h3 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    // Enhanced gradient underline with animation
+    &:after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 4px;
+      background: linear-gradient(90deg, #00a888, #00c6ff);
+      left: 20%;
+      bottom: -15px;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      animation: gradientShift 3s infinite;
+    }
+  }
+  
+  .section-icon {
+    display: inline-block;
+    font-size: 36px;
+    vertical-align: middle;
+    margin-right: 12px;
+    animation: pulse 2s infinite;
+  }
+  
+  // Documents grid with improved layout
+  .documents-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+    
+    .grid-item {
+      transition: all 0.3s ease;
+      position: relative;
+      
+      &:hover {
+        transform: translateY(-8px);
+      }
+    }
+  }
+  
+  // Enhanced new badge
+  .new-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(135deg, #ff3b30, #ff4f38);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 7px 24px;
+    transform: rotate(45deg) translate(29px, -5px);
+    transform-origin: top right;
+    z-index: 3;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+    // Enhanced pagination
+  .pagination-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    
+    /* Fix pagination item styling */
+    :global {
+      .ant-pagination-item {
+        border-radius: 4px;
+        border-color: #e8e8e8;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          border-color: #00a888;
+          
+          a {
+            color: #00a888;
+          }
+        }
+      }
+      
+      .ant-pagination-item-active {
+        background: linear-gradient(to right, #00a888, #00c6ff);
+        border: none;
+        box-shadow: 0 2px 8px rgba(0, 168, 136, 0.3);
+        
+        a {
+          color: white !important;
+        }
+        
+        &:hover {
+          background: linear-gradient(to right, #008a73, #00b8eb);
+        }
+      }
+      
+      .ant-pagination-prev .ant-pagination-item-link,
+      .ant-pagination-next .ant-pagination-item-link {
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: #00a888;
+          border-color: #00a888;
+        }
+      }
+    }
+  }
+  
+  // Enhanced decoration dots
+  .decoration-dots {
+    position: absolute;
+    bottom: 50px;
+    right: 40px;
+    width: 220px;
+    height: 220px;
+    background-image: radial-gradient(#0072ff 1.5px, transparent 2px);
+    background-size: 22px 22px;
+    opacity: 0.15;
+    z-index: -1;
+    animation: dotsFloat 30s infinite linear;
+    border-radius: 50%;
+    transform: rotate(-5deg);
+  }
+  
+  .loading-container {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Keyframe animations
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes dotsFloat {
+  from { background-position: 0 0; }
+  to { background-position: 100px 100px; }
+}
+
+// Responsive grid
+@media (max-width: 1200px) {
+  .new-section {
+    .documents-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .new-section {
+    padding: 40px 15px;
+    
+    h3 {
+      font-size: 28px;
+    }
+    
+    .documents-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .new-section {
+    h3 {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+    
+    .documents-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

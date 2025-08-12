@@ -1,0 +1,341 @@
+.user-profile-container {
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+  }
+  
+  .profile-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    
+    &.avatar-card {
+      text-align: center;
+      background-color: #fff;
+    }
+    
+    &.info-card {
+      background-color: #fff;
+      .edit-button{
+        background: linear-gradient(135deg, #233E8B 0%, #1EAE98 100%);
+        border: none;
+        font-size: 16px;
+
+          &:hover {
+          transform: translateX(-10px);
+          box-shadow: 0 8px 25px rgba(0, 107, 62, 0.5);
+          background: linear-gradient(135deg, #022fb7 0%, #1EAE98 100%);
+        }
+      }
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+  }
+  
+  .profile-avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    
+    .avatar-upload-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+      cursor: pointer;
+      
+      &:hover {
+        .avatar-upload-mask {
+          opacity: 1;
+        }
+      }
+      
+      .avatar-upload-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.3s;
+        color: white;
+        
+        .anticon {
+          font-size: 24px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+    
+    .ant-avatar {
+      border: 2px solid #f0f0f0;
+    }
+    
+    .profile-fullname {
+      margin-top: 12px;
+      margin-bottom: 4px;
+    }
+    
+    .profile-email {
+      color: rgba(0, 0, 0, 0.45);
+      margin-bottom: 12px;
+    }
+    
+    .status-tag {
+      margin-top: 8px;
+    }
+  }
+  
+  .info-descriptions {
+    .ant-descriptions-item-label {
+      width: 180px;
+      
+      .description-icon {
+        margin-right: 8px;
+        color: #1890ff;
+      }
+    }
+  }
+  
+  .document-stats {
+    margin-top: 24px;
+    
+    .ant-typography {
+      margin-bottom: 16px;
+    }
+    
+    .stats-row {
+      .stat-card {
+        text-align: center;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        .stat-title {
+          font-size: 14px;
+          color: rgba(0, 0, 0, 0.45);
+          margin-bottom: 8px;
+        }
+        
+        .stat-value {
+          font-size: 24px;
+          font-weight: 500;
+          color: #1890ff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          .stat-icon {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  // Modal styles
+  .ant-modal {
+    .ant-form {
+      .ant-form-item {
+        margin-bottom: 24px;
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .user-profile-container {
+    .profile-card.avatar-card {
+      margin-bottom: 24px;
+    }
+    
+    .info-descriptions {
+      .ant-descriptions-item-label {
+        width: 120px;
+      }
+    }
+
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.user-profile-container {
+  .profile-card {
+    margin-bottom: 20px;
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    &.avatar-card {
+      text-align: center;
+      
+      .profile-avatar-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .profile-fullname {
+          margin-top: 16px;
+          margin-bottom: 8px;
+        }
+        
+        .profile-email {
+          color: #666;
+          margin-bottom: 16px;
+        }
+        
+        .status-tag {
+          margin-right: 8px;
+        }
+      }
+    }
+    
+    .info-descriptions {
+      .description-icon {
+        margin-right: 8px;
+        color: #1890ff;
+      }
+    }
+  }
+  
+  .document-stats {
+    margin-top: 16px;
+    
+    .stats-row {
+      margin-top: 16px;
+      
+      .stat-card {
+        text-align: center;
+        
+        .stat-title {
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 8px;
+        }
+        
+        .stat-value {
+          font-size: 20px;
+          font-weight: 500;
+          
+          .stat-icon {
+            color: #1890ff;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+  
+  // Avatar upload styling
+  .avatar-upload-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    
+    .ant-avatar {
+      border: 2px solid #f0f0f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .avatar-upload-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      opacity: 0;
+      transition: all 0.3s;
+      color: white;
+    }
+    
+    &:hover .avatar-upload-mask {
+      opacity: 1;
+    }
+  }
+  
+  // Avatar preview in modal
+  .avatar-uploader {
+    .ant-upload-picture-card-wrapper .ant-upload.ant-upload-select {
+      width: 128px;
+      height: 128px;
+      margin-right: 0;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+  
+    .avatar-preview {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .avatar-preview-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      
+      &:hover .avatar-preview-mask {
+        opacity: 1;
+      }
+    }
+  }
+  
+  .upload-hint {
+    color: #999;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+}

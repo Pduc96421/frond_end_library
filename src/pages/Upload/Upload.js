@@ -1,22 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Upload,
-  Button,
-  Form,
-  Input,
-  Select,
-  Switch,
-  Space,
-  Card,
-  Typography,
-  Tag,
-  message,
-} from "antd";
-import {
-  InboxOutlined,
-  PlusOutlined,
-  CloudUploadOutlined,
-} from "@ant-design/icons";
+import { Upload, Button, Form, Input, Select, Switch, Space, Card, Typography, Tag, message } from "antd";
+import { InboxOutlined, PlusOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import classNames from "classnames/bind";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -49,7 +33,7 @@ const FileUploadPage = () => {
     return categories.map((category) => ({
       value: category.id,
       label: category.name,
-      disabled: category.status !== "active",
+      disabled: category.status !== "ACTIVE",
     }));
   };
 
@@ -58,7 +42,6 @@ const FileUploadPage = () => {
       try {
         setLoading(true);
         const response = await getCategories();
-        console.log("categories", response);
         if (response.code === 200) {
           const transformedCategories = transformCategories(response.result);
           setDataCategories(transformedCategories);
@@ -97,26 +80,18 @@ const FileUploadPage = () => {
       return;
     }
 
-    // if (!tags) {
-    //   dispatch(showAlert("Vui lòng nhập tên thẻ tag", "error"));
-    //   return;
-    // }
-
     try {
       setUploading(true);
 
-      // Construct the data object according to your schema
       const formData = new FormData();
       formData.append("file", fileList[0].originFileObj);
       formData.append("title", values.title);
       formData.append("description", values.description || "");
 
       formData.append("isPublic", values.isPublic);
-      const selectedCategory = dataCategories.find(
-        (cat) => cat.value === values.categoryName
-      );
+      const selectedCategory = dataCategories.find((cat) => cat.value === values.categoryName);
       if (selectedCategory) {
-        formData.append("categoryName", selectedCategory.label); // Gửi tên danh mục thay vì ID
+        formData.append("category_id", selectedCategory.value);
       } else {
         message.error("Danh mục không hợp lệ");
         setUploading(false);
@@ -128,29 +103,17 @@ const FileUploadPage = () => {
         formData.append(`tags[${index}]`, tag);
       });
 
-      const response = await uploadDocument(formData);
+      await uploadDocument(formData);
 
-      if (response.code === 200) {
-        dispatch(showAlert("Tải lên tài liệu thành công!", "success"));
-        form.resetFields(); // Reset form fields after successful upload
-        setFileList([]); // Clear file list
-        setTags([]); // Clear tags
-
-        const parentPath = location.pathname.replace("/upload", "");
-        navigate(parentPath); // Redirect to document page
-      } else {
-        const errorMsg = response?.message || "Tải lên tài liệu thất bại!";
-        dispatch(showAlert(errorMsg, "error"));
-        console.log(errorMsg);
-      }
+      message.success("Tải lên tài liệu thành công!");
+      form.resetFields();
+      setFileList([]);
+      setTags([]);
+      const parentPath = location.pathname.replace("/upload", "");
+      navigate(parentPath);
     } catch (error) {
+      message.error("Tải lên tài liệu thất bại. Vui lòng thử lại.");
       console.error("Upload error:", error);
-      dispatch(
-        showAlert(
-          "Có lỗi xảy ra khi tải lên: " + (error.message || "Không xác định"),
-          "error"
-        )
-      );
     } finally {
       setUploading(false);
     }
@@ -242,18 +205,10 @@ const FileUploadPage = () => {
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className="ant-upload-text">
-                Nhấp hoặc kéo tập tin vào khu vực này để tải lên
-              </p>
-              <p className="ant-upload-hint">
-                Hỗ trợ tải lên file .pdf. Kích thước tối đa 10MB.
-              </p>
+              <p className="ant-upload-text">Nhấp hoặc kéo tập tin vào khu vực này để tải lên</p>
+              <p className="ant-upload-hint">Hỗ trợ tải lên file .pdf. Kích thước tối đa 10MB.</p>
             </Dragger>
-            {fileList.length > 0 && (
-              <div className={cx("selectedFile")}>
-                Đã chọn: {fileList[0].name}
-              </div>
-            )}
+            {fileList.length > 0 && <div className={cx("selectedFile")}>Đã chọn: {fileList[0].name}</div>}
           </div>
         </Form.Item>
 
@@ -294,16 +249,8 @@ const FileUploadPage = () => {
         </Form.Item>
 
         {/* Public/Private */}
-        <Form.Item
-          name="isPublic"
-          label={<span className={cx("formLabel")}>Công khai</span>}
-          valuePropName="checked"
-        >
-          <Switch
-            checkedChildren="Công khai"
-            unCheckedChildren="Riêng tư"
-            className={cx("switchPublic")}
-          />
+        <Form.Item name="isPublic" label={<span className={cx("formLabel")}>Công khai</span>} valuePropName="checked">
+          <Switch checkedChildren="Công khai" unCheckedChildren="Riêng tư" className={cx("switchPublic")} />
         </Form.Item>
 
         {/* Tags */}
@@ -314,12 +261,7 @@ const FileUploadPage = () => {
         >
           <Space className={cx("tagSection")} wrap>
             {tags.map((tag) => (
-              <Tag
-                key={tag}
-                closable
-                onClose={() => handleTagClose(tag)}
-                className={cx("tagItem")}
-              >
+              <Tag key={tag} closable onClose={() => handleTagClose(tag)} className={cx("tagItem")}>
                 {tag}
               </Tag>
             ))}

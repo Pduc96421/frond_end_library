@@ -29,18 +29,12 @@ function Notification() {
       setLoading(true);
       const response = await getNotifications(0, pagination.size);
 
-      console.log(response);
-
-      if (response?.code === 200) {
-        setNotifications(response.result.content);
-        setPagination((prev) => ({
-          ...prev,
-          totalElements: response.result.totalElements,
-        }));
-        setUnreadCount(
-          response.result.content.filter((item) => !item.read).length
-        );
-      }
+      setNotifications(response.result.content);
+      setPagination((prev) => ({
+        ...prev,
+        totalElements: response.result.totalElements,
+      }));
+      setUnreadCount(response.result.content.filter((item) => !item.read).length);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     } finally {
@@ -81,15 +75,10 @@ function Notification() {
       {
         key: "notifications",
         label: (
-          <div
-            className={cx("notification-container")}
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className={cx("notification-container")} onClick={(e) => e.stopPropagation()}>
             <div className={cx("notification-header")}>
               <Text strong>Thông báo</Text>
-              {unreadCount > 0 && (
-                <Text type="secondary">{unreadCount} thông báo chưa đọc</Text>
-              )}
+              {unreadCount > 0 && <Text type="secondary">{unreadCount} thông báo chưa đọc</Text>}
             </div>
 
             <List
@@ -108,13 +97,8 @@ function Notification() {
                         <Text strong>{item.title}</Text>
                         {!item.read && <Badge status="processing" />}
                       </div>
-                      <Text className={cx("notification-description")}>
-                        {item.description}
-                      </Text>
-                      <Text
-                        type="secondary"
-                        className={cx("notification-time")}
-                      >
+                      <Text className={cx("notification-description")}>{item.description}</Text>
+                      <Text type="secondary" className={cx("notification-time")}>
                         {formatDate(item.createdAt)}
                       </Text>
                     </div>
@@ -145,15 +129,8 @@ function Notification() {
       open={dropdownOpen}
       onOpenChange={setDropdownOpen}
     >
-      <Badge
-        count={unreadCount}
-        offset={[-2, 2]}
-        className={cx("notification-badge")}
-      >
-        <Button
-          icon={<BellOutlined />}
-          className={cx("notification-icon")}
-        ></Button>
+      <Badge count={unreadCount} offset={[-2, 2]} className={cx("notification-badge")}>
+        <Button icon={<BellOutlined />} className={cx("notification-icon")}></Button>
       </Badge>
     </Dropdown>
   );

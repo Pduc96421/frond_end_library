@@ -48,7 +48,6 @@ function Categories() {
     try {
       setLoading(true);
       const response = await getCategories();
-      console.log("categories", response);
       if (response.code === 200) {
         setDataCategories(response.result);
       }
@@ -64,7 +63,6 @@ function Categories() {
     try {
       setLoading(true);
       const response = await searchCategory(keyword);
-      console.log("search categories", response);
       if (response.code === 200) {
         setDataCategories(response.result);
       }

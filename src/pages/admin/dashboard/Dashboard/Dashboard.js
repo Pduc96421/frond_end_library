@@ -64,7 +64,6 @@ const Dashboard = () => {
           getTopDocument(),
         ]);
 
-        // Update state with fetched data
         setStats({
           documents: documentsData.result.totalElements || 0,
           users: usersData.result.totalElements || 0,
@@ -72,9 +71,6 @@ const Dashboard = () => {
           tags: tagsData.result.length || 0,
         });
 
-        console.log("topDocsData", topDocsData);
-
-        // Đảm bảo topDocsData là một mảng
         setTopDocuments(topDocsData.result || []);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);

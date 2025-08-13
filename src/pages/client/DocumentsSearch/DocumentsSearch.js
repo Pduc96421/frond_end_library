@@ -1,22 +1,9 @@
-import {
-  useParams,
-  useSearchParams,
-  Link,
-} from "react-router-dom";
+import { useParams, useSearchParams, Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./DocumentsSearch.module.scss";
 import { getTags, likeDocument, searchDocument } from "~/services/documentService";
 import { useState, useEffect } from "react";
-import {
-  Pagination,
-  Empty,
-  Select,
-  Row,
-  Col,
-  Image,
-  Button,
-  Tooltip,
-} from "antd";
+import { Pagination, Empty, Select, Row, Col, Image, Button, Tooltip } from "antd";
 import { useDispatch } from "react-redux";
 import { EyeOutlined, LikeOutlined } from "@ant-design/icons";
 import { showAlert } from "~/store/actions/alert";
@@ -67,13 +54,7 @@ function DocumentsSearch() {
 
       const searchKeyword = keyword?.trim() || "";
 
-      const response = await searchDocument(
-        searchKeyword,
-        tag,
-        page - 1,
-        pageSize
-      );
-      console.log(response);
+      const response = await searchDocument(searchKeyword, tag, page - 1, pageSize);
       if (response.code === 200) {
         setDocuments(response.result.content);
         setPagination((prev) => ({
@@ -108,11 +89,8 @@ function DocumentsSearch() {
       try {
         setLoading(true);
         const response = await getTags();
-        if (response.code === 200) {
-          setTagOptions(response.result);
-        } else {
-          dispatch(showAlert("Lỗi khi lấy danh sách thẻ tag", "error"));
-        }
+
+        setTagOptions(response.result);
       } catch (error) {
         console.error("Error fetching tags:", error);
         dispatch(showAlert("Lỗi khi lấy danh sách thẻ tag", "error"));
@@ -215,11 +193,7 @@ function DocumentsSearch() {
               <div className={cx("doc-item")} key={doc.id}>
                 <div className={cx("doc-thumb")}>
                   <Image.PreviewGroup>
-                    <Image
-                      src={doc.previewUrls[1]}
-                      alt={doc.title}
-                      className={cx("preview-image")}
-                    />
+                    <Image src={doc.previewUrls[0]} alt={doc.title} className={cx("preview-image")} />
                   </Image.PreviewGroup>
                 </div>
                 <div className={cx("doc-info")}>

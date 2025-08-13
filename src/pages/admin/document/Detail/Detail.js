@@ -1,26 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Card,
-  Row,
-  Col,
-  Tag,
-  Descriptions,
-  Image,
-  Rate,
-  Space,
-  Button,
-} from "antd";
+import { Card, Row, Col, Tag, Descriptions, Image, Rate, Space, Button } from "antd";
 import { FileTextOutlined, EyeOutlined, LikeOutlined } from "@ant-design/icons";
 import classNames from "classnames/bind";
 
-
-import {
-  approvedDocument,
-  getDocumentById,
-  rejectedDocument,
-} from "~/services/documentService";
+import { approvedDocument, getDocumentById, rejectedDocument } from "~/services/documentService";
 import { hideLoading, showLoading } from "~/store/actions/loading";
 import styles from "./Detail.module.scss";
 import { showAlert } from "~/store/actions/alert";
@@ -36,8 +21,7 @@ function DocumentDetail() {
   const fetchDocument = async () => {
     try {
       dispatch(showLoading());
-      const response = await getDocumentById(Number(id));
-      console.log("Document response:", response);
+      const response = await getDocumentById(id);
       if (response.code === 200) {
         setDocument(response.result);
       }
@@ -52,7 +36,6 @@ function DocumentDetail() {
     try {
       dispatch(showLoading());
       const response = await approvedDocument(id);
-      console.log("Approve response:", response);
       if (response.code === 200) {
         dispatch(showAlert("duyệt tài liệu thành công", "success"));
         fetchDocument();
@@ -69,7 +52,6 @@ function DocumentDetail() {
     try {
       dispatch(showLoading());
       const response = await rejectedDocument(id);
-      console.log("Reject response:", response);
       if (response.code === 200) {
         dispatch(showAlert("từ chối tài liệu thành công", "success"));
         fetchDocument();
@@ -93,9 +75,7 @@ function DocumentDetail() {
     return (
       <div className={cx("document-detail")}>
         <Card>
-          <div style={{ padding: "20px", textAlign: "center" }}>
-            Document not found
-          </div>
+          <div style={{ padding: "20px", textAlign: "center" }}>Document not found</div>
         </Card>
       </div>
     );
@@ -104,13 +84,13 @@ function DocumentDetail() {
   return (
     <div className={cx("document-detail")}>
       <Card
-        title={document.documentIndex.title}
+        title={document.title}
         extra={
           <Space size="large" align="center">
             <Button
               type="primary"
               onClick={() => handleApprove()}
-              disabled={document.documentIndex.status === "APPROVED"}
+              disabled={document.status === "APPROVED"}
             >
               Duyệt bài
             </Button>
@@ -118,13 +98,13 @@ function DocumentDetail() {
               type="primary"
               danger
               onClick={() => handleReject()}
-              disabled={document.documentIndex.status === "REJECTED"}
+              disabled={document.status === "REJECTED"}
             >
               Từ chối
             </Button>
             <Button type="primary" onClick={() => navigate(-1)}>
-                        Quay lại
-                      </Button>
+              Quay lại
+            </Button>
           </Space>
         }
       >
@@ -133,13 +113,8 @@ function DocumentDetail() {
           <Col span={8}>
             <div className={cx("preview-images")}>
               <Image.PreviewGroup>
-                {document.documentIndex.previewUrls.map((url, index) => (
-                  <Image
-                    key={index}
-                    src={url}
-                    alt={`Preview ${index + 1}`}
-                    className={cx("preview-image")}
-                  />
+                {document.previewUrls.map((url, index) => (
+                  <Image key={index} src={url} alt={`Preview ${index + 1}`} className={cx("preview-image")} />
                 ))}
               </Image.PreviewGroup>
             </div>
@@ -151,23 +126,23 @@ function DocumentDetail() {
               <Descriptions.Item label="Trạng thái" span={2}>
                 <Tag
                   color={
-                    document.documentIndex.status === "APPROVED"
+                    document.status === "APPROVED"
                       ? "success"
-                      : document.documentIndex.status === "REJECTED"
+                      : document.status === "REJECTED"
                       ? "error"
                       : "warning"
                   }
                 >
-                  {document.documentIndex.status === "APPROVED"
+                  {document.status === "APPROVED"
                     ? "Đã duyệt"
-                    : document.documentIndex.status === "REJECTED"
+                    : document.status === "REJECTED"
                     ? "Từ chối"
                     : "Chờ duyệt"}
                 </Tag>
               </Descriptions.Item>
 
               <Descriptions.Item label="Mô tả" span={2}>
-                {document.documentIndex.description}
+                {document.description}
               </Descriptions.Item>
 
               <Descriptions.Item label="Danh mục" span={2}>
@@ -175,33 +150,14 @@ function DocumentDetail() {
               </Descriptions.Item>
 
               <Descriptions.Item label="Thẻ" span={2}>
-                {document.documentIndex.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
+                {document.tags.map((tag) => (
+                  <Tag key={tag}>{tag.name}</Tag>
                 ))}
               </Descriptions.Item>
 
-              {/* <Descriptions.Item label="Người tạo" span={2}>
-                <Space>
-                  <UserOutlined />
-                  {document.createdBy.fullName} ({document.createdBy.email})
-                </Space>
-              </Descriptions.Item>
-
-              <Descriptions.Item label="Ngày tạo" span={2}>
-                {moment(document.createdAt).format("DD/MM/YYYY HH:mm")}
-              </Descriptions.Item>
-
-              <Descriptions.Item label="Ngày cập nhật" span={2}>
-                {moment(document.updatedAt).format("DD/MM/YYYY HH:mm")}
-              </Descriptions.Item> */}
-
               <Descriptions.Item label="Đánh giá" span={2}>
                 <Space>
-                  <Rate
-                    disabled
-                    defaultValue={document.averageRating}
-                    allowHalf
-                  />
+                  <Rate disabled defaultValue={document.averageRating} allowHalf />
                 </Space>
               </Descriptions.Item>
 
@@ -221,12 +177,7 @@ function DocumentDetail() {
             </Descriptions>
 
             <div className={cx("actions")}>
-              <Button
-                type="primary"
-                icon={<FileTextOutlined />}
-                href={document.documentIndex.fileUrl}
-                target="_blank"
-              >
+              <Button type="primary" icon={<FileTextOutlined />} href={document.fileUrl} target="_blank">
                 View Document
               </Button>
             </div>

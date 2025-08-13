@@ -188,7 +188,6 @@ function AllDocument() {
     try {
       setLoading(true);
       const response = await getAllDocuments(page - 1, pageSize);
-      console.log("Documents response:", response);
 
       if (response.code === 200) {
         setDocuments(response.result.content);
@@ -209,7 +208,6 @@ function AllDocument() {
     try {
       setLoading(true);
       const response = await searchDocument(keyword, tag, page - 1, pageSize);
-      console.log("SearchDocuments response:", response);
 
       if (response.code === 200) {
         setDocuments(response.result.content);
@@ -234,7 +232,6 @@ function AllDocument() {
         page - 1,
         pageSize
       );
-      console.log("Documents category response:", response);
 
       if (response.code === 200) {
         setDocuments(response.result.content);
@@ -255,7 +252,6 @@ function AllDocument() {
     try {
       setLoading(true);
       const response = await getDocumentsPending(page - 1, pageSize);
-      console.log("Documents Pending response:", response);
 
       if (response.code === 200) {
         setDocuments(response.result.content);

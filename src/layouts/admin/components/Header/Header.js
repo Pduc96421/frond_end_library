@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { Link, useNavigate } from "react-router-dom";
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Avatar } from "antd";
 import { useSelector } from "react-redux";
 
@@ -20,6 +20,12 @@ function Header() {
       key: "profile",
       label: "Thông tin cá nhân",
       icon: <UserOutlined />,
+    },
+    {
+      key: "home",
+      label: "Trang chủ",
+      icon: <HomeOutlined />,
+      onClick: () => navigate("/"),
     },
     {
       type: "divider",

@@ -7,7 +7,7 @@ export const createLibrary = (name, description) => {
   });
 };
 
-export const getLibraryById = async (id, page = 0, size = 10) => {
+export const getLibraryById = async (id, page = 1, size = 10) => {
   try {
     const response = await request.get(`/library/user/${id}`, {
       params: {
@@ -77,14 +77,14 @@ export const deleteLibrary = async (libraryId) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 export const changeStatusDoc = async (libraryId, documentId) => {
-   try {
+  try {
     const response = await request.post(`/library/${libraryId}/${documentId}/status`);
 
     return response;
   } catch (error) {
     throw error;
   }
-}
+};

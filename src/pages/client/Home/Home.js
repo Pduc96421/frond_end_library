@@ -22,21 +22,16 @@ function Home() {
   const fetchDocuments = async (page = 1, size = 8) => {
     setLoading(true);
     try {
-      // Fetch top documents (no pagination needed)
       const topRes = await getTopDocument();
-      if (topRes.code === 200 && Array.isArray(topRes.result)) {
-        setTopDocuments(topRes.result);
-      }
+      setTopDocuments(topRes.result);
 
-      // Fetch paginated new documents
       const newRes = await getAllDocuments(page - 1, size);
-      if (newRes.code === 200) {
-        setNewDocuments(newRes.result.content);
-        setPagination((prev) => ({
-          ...prev,
-          total: newRes.result.totalElements,
-        }));
-      }
+
+      setNewDocuments(newRes.result.content);
+      setPagination((prev) => ({
+        ...prev,
+        total: newRes.result.totalElements,
+      }));
     } catch (error) {
       console.error("Lỗi khi tải dữ liệu:", error);
     } finally {
@@ -60,16 +55,11 @@ function Home() {
   return (
     <div className={cx("home-container")} style={{ padding: "0px" }}>
       <HeroSection />
-      
-      <FeaturedDocuments 
-        documents={topDocuments}
-        loading={loading}
-      />
-      
-      <StatsCounter 
-        documents={[...topDocuments, ...newDocuments]} 
-      />
-      
+
+      <FeaturedDocuments documents={topDocuments} loading={loading} />
+
+      <StatsCounter documents={[...topDocuments, ...newDocuments]} />
+
       <NewDocuments
         documents={newDocuments}
         loading={loading}

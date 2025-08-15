@@ -1,15 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Typography,
-  Empty,
-  Badge,
-  Pagination,
-  Button,
-  Form,
-} from "antd";
+import { Card, Row, Col, Typography, Empty, Badge, Pagination, Button, Form } from "antd";
 import { FolderOutlined, PlusOutlined } from "@ant-design/icons";
 import classNames from "classnames/bind";
 import { useDispatch } from "react-redux";
@@ -39,22 +29,15 @@ function Library() {
   const fetchLibraries = async () => {
     try {
       setLoading(true);
-      const response = await getAllLibraryOfUser(
-        pagination.page,
-        pagination.size
-      );
+      const response = await getAllLibraryOfUser(pagination.page, pagination.size);
 
-      console.log('Library', response);
-
-      if (response.code === 200) {
-        setLibraries(response.result.content);
-        setPagination({
-          page: response.result.page,
-          size: response.result.size,
-          totalElements: response.result.totalElements,
-          totalPages: response.result.totalPages,
-        });
-      }
+      setLibraries(response.result.content);
+      setPagination({
+        page: response.result.page,
+        size: response.result.size,
+        totalElements: response.result.totalElements,
+        totalPages: response.result.totalPages,
+      });
     } catch (error) {
       console.error("Error fetching libraries:", error);
     } finally {
@@ -82,13 +65,11 @@ function Library() {
   const handleCreateLibrary = async (values) => {
     try {
       setLoading(true);
-      const response = await createLibrary(values.name, values.description);
-      if (response.code === 200) {
-        dispatch(showAlert("Tạo thư viện thành công", "success"));
-        form.resetFields();
-        setShowCreateModal(false);
-        fetchLibraries();
-      }
+      await createLibrary(values.name, values.description);
+      dispatch(showAlert("Tạo thư viện thành công", "success"));
+      form.resetFields();
+      setShowCreateModal(false);
+      fetchLibraries();
     } catch (error) {
       console.error("Error creating library:", error);
       dispatch(showAlert("Không thể tạo thư viện", "error"));
@@ -123,10 +104,7 @@ function Library() {
       </div>
 
       {libraries.length === 0 ? (
-        <Empty
-          description="Chưa có thư viện nào"
-          className={cx("empty-state")}
-        />
+        <Empty description="Chưa có thư viện nào" className={cx("empty-state")} />
       ) : (
         <div>
           <Row gutter={[16, 16]}>

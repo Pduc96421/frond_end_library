@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  Card,
-  Space,
-  Typography,
-  Row,
-  Col,
-  Pagination,
-  Empty,
-  Switch,
-  Button,
-  Popconfirm,
-} from "antd";
+import { Modal, Card, Space, Typography, Row, Col, Pagination, Empty, Switch, Button, Popconfirm } from "antd";
 import { BellOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import moment from "moment";
 import {
@@ -45,14 +33,12 @@ const ReminderForm = ({ open, onCancel }) => {
   const fetchReminders = async (page = 0, size = 10) => {
     try {
       const response = await getAllReminder(page, size);
-      if (response.code === 200) {
-        setReminders(response.result.content);
-        setPagination({
-          current: response.result.page + 1,
-          pageSize: response.result.size,
-          total: response.result.totalElements,
-        });
-      }
+      setReminders(response.result.content);
+      setPagination({
+        current: response.result.page + 1,
+        pageSize: response.result.size,
+        total: response.result.totalElements,
+      });
     } catch (error) {
       console.error("Failed to fetch reminders:", error);
     } finally {
@@ -96,12 +82,7 @@ const ReminderForm = ({ open, onCancel }) => {
       try {
         const response = await toggleReminder(reminder.id);
         if (response.code === 200) {
-          dispatch(
-            showAlert(
-              checked ? "Đã bật nhắc nhở" : "Đã tắt nhắc nhở",
-              "success"
-            )
-          );
+          dispatch(showAlert(checked ? "Đã bật nhắc nhở" : "Đã tắt nhắc nhở", "success"));
           // Refresh the reminders list
           fetchReminders(pagination.current - 1, pagination.pageSize);
         }
@@ -147,31 +128,14 @@ const ReminderForm = ({ open, onCancel }) => {
       <Card className={cx("reminder-card")} loading={loading}>
         <div className={cx("reminder-time-container")}>
           <div className={cx("time-display")}>
-            <div className={cx("time")}>
-              {moment(reminder.remindAt).format("HH:mm")}
-            </div>
-            <div className={cx("date")}>
-              {moment(reminder.remindAt).format("DD/MM/YYYY")}
-            </div>
+            <div className={cx("time")}>{moment(reminder.remindAt).format("HH:mm")}</div>
+            <div className={cx("date")}>{moment(reminder.remindAt).format("DD/MM/YYYY")}</div>
           </div>
           <Space>
-            <Switch
-              checked={reminder.active}
-              onChange={handleToggle}
-              // checkedChildren="Đang hoạt động"
-              // unCheckedChildren="Đã tắt"
-              className={cx("reminder-switch")}
-            />
-            {/* <Tag color={reminder.sent ? "blue" : "orange"}>
-              {reminder.sent ? "Đã gửi" : "Chưa gửi"}
-            </Tag> */}
+            <Switch checked={reminder.active} onChange={handleToggle} className={cx("reminder-switch")} />
             <div className={cx("action-buttons")}>
-              <Button
-                type="text"
-                icon={<EditOutlined />}
-                onClick={() => setShowEditModal(true)}
-              />
-              
+              <Button type="text" icon={<EditOutlined />} onClick={() => setShowEditModal(true)} />
+
               <Popconfirm
                 title="Xóa nhắc nhở"
                 description="Bạn có chắc chắn muốn xóa nhắc nhở này?"
@@ -220,11 +184,7 @@ const ReminderForm = ({ open, onCancel }) => {
       footer={null}
       className={cx("reminder-modal")}
     >
-      <Button
-        type="primary"
-        onClick={() => setShowAddModal(true)}
-        style={{ marginBottom: 16 }}
-      >
+      <Button type="primary" onClick={() => setShowAddModal(true)} style={{ marginBottom: 16 }}>
         Thêm nhắc nhở
       </Button>
 

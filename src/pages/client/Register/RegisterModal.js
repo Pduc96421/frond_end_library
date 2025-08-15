@@ -1,209 +1,130 @@
-import React, { useState } from "react";
-import { Modal, Form, Input, notification } from "antd";
+import { useState } from "react";
+import { Form, Input, Button, Radio, DatePicker, Typography, message, Modal } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
+import dayjs from "dayjs";
 import styles from "./RegisterModal.module.scss";
-import { CheckCircleOutlined, WarningOutlined } from "@ant-design/icons";
+import { register, sendConfirmAccount } from "../../../services/authService";
 
 const cx = classNames.bind(styles);
 
 function RegisterModal({ open, onClose, onLogin }) {
-	const [formData, setFormData] = useState({
-		email: "",
-		username: "",
-		password: "",
-		fullName: "",
-		dob: "",
-	});
-	const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
-	const handleChange = (e) => {
-		// console.log(e.target.name);
-		// console.log(e.target.value);
-		// console.log("------");
-		setFormData({
-			...formData,
-			[e.target.name]: e.target.value,
-		});
-	};
+  const onFinish = async (values) => {
+    const { confirmPassword, dob, ...rest } = values;
 
-	const API_DOMAIN = "http://localhost:8088/";
-const handleSubmit = async (values) => {
-  try {
-    const response = await fetch(`${API_DOMAIN}users/register`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const result = await response.json();
-    
-    if (response.ok) {
-      // Thông báo thành công
-      notification.success({
-        message: "Đăng ký thành công!",
-        description: "Vui lòng kiểm tra email để kích hoạt tài khoản của bạn.",
-        icon: <CheckCircleOutlined style={{ color: "#52c41a" }} />,
-        placement: "topRight",
-        duration: 6, // Hiển thị 6 giây
-      });
-      
-      // Đóng modal và chuyển đến modal đăng nhập
-      onClose();
-      onLogin();
-    } else {
-      // Thông báo lỗi
-      notification.error({
-        message: "Đăng ký thất bại",
-        description: result.message || "Có lỗi xảy ra khi đăng ký. Vui lòng thử lại.",
-        icon: <WarningOutlined style={{ color: "#ff4d4f" }} />,
-        placement: "topRight",
-        duration: 6, // Hiển thị 6 giây
-      });
+    if (values.password !== confirmPassword) {
+      return message.error("Mật khẩu xác nhận không khớp");
     }
-  } catch (error) {
-    console.error("Lỗi đăng ký:", error);
-    notification.error({
-      message: "Lỗi kết nối",
-      description: "Không thể kết nối tới máy chủ. Vui lòng thử lại sau.",
-      placement: "topRight",
-      duration: 6,
-    });
-  }
-};
 
-	return (
-		<Modal
-			title="ĐĂNG KÝ"
-			open={open}
-			onCancel={onClose}
-			footer={null}
-			width={600}
-			className={cx("register-modal")}
-			closeIcon={<span className={cx("close-icon")}>×</span>}
-		>
-			<Form
-				form={form}
-				layout="vertical"
-				onFinish={handleSubmit}
-				className={cx("register-form")}
-			>
-				<Form.Item
-					name="fullName"
-					label="Tên đầy đủ"
-					rules={[{ required: true, message: "Vui lòng nhập tên đầy đủ" }]}
-				>
-					<Input
-						onChange={handleChange}
-						name="fullName"
-						placeholder="Nguyễn Văn A"
-						className={cx("input-field")}
-					/>
-				</Form.Item>
+    const payload = {
+      ...rest,
+      dob: dayjs(dob).format("YYYY-MM-DD"),
+    };
 
-				<Form.Item
-					name="dob"
-					label="Ngày sinh"
-					rules={[{ required: true, message: "Vui lòng nhập ngày sinh" }]}
-				>
-					<Input
-						onChange={handleChange}
-						name="dob"
-						placeholder="01/01/2000"
-						// type="date"
-						className={cx("input-field")}
-					/>
-				</Form.Item>
+    try {
+      setLoading(true);
+      await register(payload);
+      await sendConfirmAccount(payload.email);
+      message.success("Đăng ký thành công, vui lòng xác thực email!");
+      navigate(`/verify-account?email=${payload.email}`);
+      onClose();
+    } catch (err) {
+      message.error(err.response?.data?.message || "Đăng ký thất bại!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-				<Form.Item
-					name="email"
-					label="Địa chỉ email"
-					rules={[
-						{ required: true, message: "Vui lòng nhập địa chỉ email" },
-						{ type: "email", message: "Email không hợp lệ" },
-					]}
-				>
-					<Input
-						onChange={handleChange}
-						name="email"
-						placeholder="example@gmail.com"
-						className={cx("input-field")}
-					/>
-				</Form.Item>
-
-				<Form.Item
-					name="username"
-					label="Tên tài khoản"
-					rules={[
-						{ required: true, message: "Vui lòng nhập tên tài khoản" },
-						{ min: 4, message: "Tên tài khoản phải có ít nhất 4 ký tự!" },
-					]}
-				>
-					<Input
-						onChange={handleChange}
-						name="username"
-						placeholder="NguuyenVanA"
-						className={cx("input-field")}
-					/>
-				</Form.Item>
-
-				<Form.Item
-					name="password"
-					label="Mật khẩu"
-					rules={[
-						{ required: true, message: "Vui lòng nhập mật khẩu!" },
-						{ min: 8, message: "Mật khẩu phải có ít nhất 8 ký tự!" },
-						{
-							pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-							message: "Mật khẩu phải có chữ hoa, chữ thường và số!",
-						},
-					]}
-				>
-					<Input.Password
-						onChange={handleChange}
-						name="password"
-						placeholder="••••••••"
-						className={cx("input-field")}
-					/>
-				</Form.Item>
-
-				<Form.Item
-					name="confirmPassword"
-					label="Nhập lại mật khẩu"
-					rules={[
-						{ required: true, message: "Vui lòng nhập lại mật khẩu" },
-						({ getFieldValue }) => ({
-							validator(_, value) {
-								if (!value || getFieldValue("password") === value) {
-									return Promise.resolve();
-								}
-								return Promise.reject(new Error("Mật khẩu không khớp"));
-							},
-						}),
-					]}
-				>
-					<Input.Password
-						placeholder="••••••••"
-						className={cx("input-field")}
-					/>
-				</Form.Item>
-
-				<Form.Item className={cx("submit-button-container")}>
-					<button type="submit" className={cx("submit-btn")}>
-						Đăng ký
-					</button>
-				</Form.Item>
-
-				<div className={cx("login-section")}>
-					<span>Đã có tài khoản?</span>
-					<button type="button" className={cx("login-link")} onClick={onLogin}>
-						Đăng nhập
-					</button>
-				</div>
-			</Form>
-		</Modal>
-	);
+  return (
+    <Modal
+      title="ĐĂNG KÝ"
+      open={open}
+      onCancel={onClose}
+      footer={null}
+      width={600}
+      className={cx("register-modal")}
+      closeIcon={<span className={cx("close-icon")}>×</span>}
+    >
+      <div className={cx("register-container")}>
+        <Form
+          layout="vertical"
+          form={form}
+          onFinish={onFinish}
+          initialValues={{
+            sex: "Male",
+            role: "user",
+          }}
+        >
+          <Form.Item
+            label="Tên đăng nhập"
+            name="username"
+            rules={[
+              { required: true, message: "Hãy nhập tên đăng nhập" },
+              { min: 4, message: "Phải có ít nhất 4 kí tự" },
+            ]}
+          >
+            <Input placeholder="Tên đăng nhập" />
+          </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Hãy nhập email" },
+              { type: "email", message: "Email không hợp lệ" },
+            ]}
+          >
+            <Input placeholder="Email" />
+          </Form.Item>
+          <Form.Item label="Họ và tên" name="fullName" rules={[{ required: true, message: "Hãy nhập họ và tên" }]}>
+            <Input placeholder="Họ và tên" />
+          </Form.Item>
+          <Form.Item label="Ngày sinh" name="dob" rules={[{ required: true, message: "Hãy chọn ngày sinh" }]}>
+            <DatePicker style={{ width: "100%" }} format="DD-MM-YYYY" />
+          </Form.Item>
+          <Form.Item
+            label="Mật khẩu"
+            name="password"
+            rules={[
+              { required: true, message: "Hãy nhập mật khẩu" },
+              {
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+                message: "Phải có ít nhất 1 chữ hoa, 1 chữ thường và 1 số",
+              },
+              { min: 6, message: "Phải có ít nhất 6 kí tự" },
+            ]}
+          >
+            <Input.Password placeholder="Mật khẩu" />
+          </Form.Item>
+          <Form.Item
+            label="Xác nhận mật khẩu"
+            name="confirmPassword"
+            rules={[{ required: true, message: "Hãy xác nhận mật khẩu" }]}
+          >
+            <Input.Password placeholder="Xác nhận mật khẩu" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block loading={loading}>
+              Đăng ký
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Link
+              onClick={() => {
+                onLogin();
+              }}
+              className={cx("link-login")}
+            >
+              Đã có tài khoản?
+            </Link>
+          </Form.Item>
+        </Form>
+      </div>
+    </Modal>
+  );
 }
 
 export default RegisterModal;

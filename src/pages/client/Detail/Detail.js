@@ -111,17 +111,9 @@ function Detail() {
   const handleDownload = async () => {
     try {
       // Gọi API để lấy URL tải xuống
-      const downloadResponse = await downloadDocument(doc.id);
+      const downloadResponse = await downloadDocument(documentId);
 
-      if (downloadResponse.code !== 200) {
-        console.log(downloadResponse.message);
-        throw new Error("Không thể lấy URL tải xuống");
-      }
-
-      // Lấy URL tải xuống từ phản hồi API
-      const fileUrl = downloadResponse.result;
-
-      // Tải xuống tệp từ URL được cung cấp
+      const fileUrl = downloadResponse.result.downloadUrl;
       const response = await fetch(fileUrl);
 
       if (!response.ok) {

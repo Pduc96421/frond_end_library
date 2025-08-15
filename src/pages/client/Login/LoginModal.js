@@ -43,8 +43,6 @@ function LoginModal({ open, onClose, onForgotPassword, onRegister }) {
     }
   };
 
-  // ...existing code...
-
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);

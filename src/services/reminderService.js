@@ -9,14 +9,11 @@ export const createReminder = async (documentId, data) => {
         headers: {
           "Content-Type": "application/json", // Đảm bảo header đúng
         },
-      }
+      },
     );
     return response;
   } catch (error) {
-    console.error(
-      "Error creating reminder:",
-      error.response?.data || error.message
-    );
+    console.error("Error creating reminder:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -29,7 +26,7 @@ export const getAllReminder = async (page = 0, size = 10) => {
         size: size,
       },
     });
-    
+
     return response;
   } catch (error) {
     console.error("Error fetching my documents:", error);
@@ -40,32 +37,32 @@ export const getAllReminder = async (page = 0, size = 10) => {
 export const toggleReminder = async (reminderId) => {
   try {
     const response = await request.put(`/reminders/${reminderId}/toggle`);
-    
+
     return response;
   } catch (error) {
     console.error("Error fetching my documents:", error);
     throw error;
   }
-}
+};
 
 export const updateReminder = async (reminderId, data) => {
   try {
     const response = await request.put(`/reminders/${reminderId}`, data);
-    
+
     return response;
   } catch (error) {
     console.error("Error fetching my documents:", error);
     throw error;
   }
-}
+};
 
 export const deleteReminder = async (reminderId) => {
   try {
     const response = await request.del(`/reminders/${reminderId}`);
-    
+
     return response;
   } catch (error) {
     console.error("Error fetching my documents:", error);
     throw error;
   }
-}
+};

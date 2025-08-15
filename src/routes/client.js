@@ -8,7 +8,6 @@ import Introduce from "~/pages/client/Introduce";
 import TermOfUse from "~/pages/client/TermOfUse";
 import FrequentlyAskedQuestions from "~/pages/client/FrequentlyAskedQuestions";
 import AboutUs from "~/pages/client/AboutUs";
-import ConfirmAccount from "~/pages/client/ConfirmAccount";
 import Detail from "~/pages/client/Detail";
 import MyProfile from "~/pages/client/MyProfile";
 import FileUploadPage from "~/pages/Upload";
@@ -18,6 +17,7 @@ import LibraryDetail from "~/pages/client/LibraryDetail";
 import DocumentEdit from "~/pages/client/DocumentEdit";
 import ChangePasswordPage from "~/pages/client/ChangePasswordPage/ChangePasswordPage";
 import GoogleCallback from "~/pages/client/GoogleLoginCallback/GoogleLoginCallback";
+import VerifyAccount from "~/pages/client/VerifyAccount/VerifyAccount";
 
 const publicRoutesClient = [
   // Public routes
@@ -28,33 +28,19 @@ const publicRoutesClient = [
       { path: config.routesClient.home, element: <Home /> },
       {
         path: "/category",
-        children: [
-          {
-            path: ":categoryId",
-            element: <CategoryPage />,
-          },
-        ],
+        children: [{ path: ":categoryId", element: <CategoryPage /> }],
       },
       {
         path: "documents",
         children: [
-          {
-            path: "search/:keyword",
-            element: <DocumentsSearch />,
-          },
-          {
-            path: "search",
-            element: <DocumentsSearch />,
-          },
+          { path: "search/:keyword", element: <DocumentsSearch /> },
+          { path: "search", element: <DocumentsSearch /> },
         ],
       },
+      { path: config.routesClient.introduce, element: <Introduce /> },
+      { path: "/verify-account", element: <VerifyAccount /> },
     ],
   },
-  {
-    path: config.routesClient.introduce,
-    element: <Introduce />,
-  },
-
   {
     path: "cau-hoi-thuong-gap",
     element: <FrequentlyAskedQuestions />,
@@ -66,13 +52,6 @@ const publicRoutesClient = [
   {
     path: "gioi-thieu",
     element: <AboutUs />,
-  },
-  {
-    path: "confirm-account",
-    children: [
-      // { path: "", element: <ConfirmAccount /> },          // Handles /confirm-account?token=xyz
-      { path: ":code", element: <ConfirmAccount /> }, // Handles /confirm-account/xyz
-    ],
   },
   {
     path: "/google/callback",
@@ -100,31 +79,16 @@ const privateRoutesClient = [
           {
             path: "/documents",
             children: [
-              {
-                path: ":documentId",
-                element: <Detail />,
-              },
-              {
-                path: "edit/:documentId",
-                element: <DocumentEdit />,
-              },
+              { path: ":documentId", element: <Detail /> },
+              { path: "edit/:documentId", element: <DocumentEdit /> },
             ],
           },
-          {
-            path: "upload",
-            element: <FileUploadPage />,
-          },
+          { path: "upload", element: <FileUploadPage /> },
           {
             path: "library",
             children: [
-              {
-                path: "",
-                element: <Library />,
-              },
-              {
-                path: "detail/:libraryId",
-                element: <LibraryDetail />,
-              },
+              { path: "", element: <Library /> },
+              { path: "detail/:libraryId", element: <LibraryDetail /> },
             ],
           },
         ],

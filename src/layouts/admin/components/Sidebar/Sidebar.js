@@ -24,7 +24,7 @@ function Sidebar() {
       key: config.routesAdmin.dashboard,
       icon: <HomeOutlined />,
       label: "Tổng quan",
-      onClick: () => navigate(config.routesAdmin.dashboard),
+      onClick: () => navigate("/admin/dashboard"),
     },
     {
       key: "users",
@@ -34,7 +34,7 @@ function Sidebar() {
         {
           key: config.routesAdmin.users.list,
           label: "Danh sách người dùng",
-          onClick: () => navigate(config.routesAdmin.users.list),
+          onClick: () => navigate("/admin/users"),
         },
       ],
     },
@@ -59,10 +59,10 @@ function Sidebar() {
           onClick: () => navigate("/admin/documents/upload"),
         },
         {
-          key: '/admin/documents/all-tag',
+          key: "/admin/documents/all-tag",
           label: "Tất cả thẻ tag",
-          onClick: () => navigate('/admin/documents/all-tag'),
-        }
+          onClick: () => navigate("/admin/documents/all-tag"),
+        },
       ],
     },
     {

@@ -1,17 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  Card,
-  Row,
-  Col,
-  Typography,
-  Empty,
-  Button,
-  Pagination,
-  Badge,
-  Tag,
-  Modal,
-} from "antd";
+import { Card, Row, Col, Typography, Empty, Button, Pagination, Badge, Tag, Modal } from "antd";
 import {
   ArrowLeftOutlined,
   FolderOutlined,
@@ -51,7 +40,7 @@ function LibraryDetail() {
   const dispatch = useDispatch();
   const [showReminderList, setShowReminderList] = useState(false);
   const [pagination, setPagination] = useState({
-    page: 0,
+    page: 1,
     size: 10,
     totalElements: 0,
     totalPages: 0,
@@ -60,26 +49,18 @@ function LibraryDetail() {
   const fetchLibrary = async () => {
     try {
       setLoading(true);
-      const response = await getLibraryById(
-        libraryId,
-        pagination.page,
-        pagination.size
-      );
+      const response = await getLibraryById(libraryId, pagination.page, pagination.size);
 
-      console.log("LibraryDetail", response);
-
-      if (response.code === 200) {
-        setLibrary({
-          ...response.result,
-          documents: response.result.document.content,
-        });
-        setPagination({
-          page: response.result.document.page,
-          size: response.result.document.size,
-          totalElements: response.result.document.totalElements,
-          totalPages: response.result.document.totalPages,
-        });
-      }
+      setLibrary({
+        ...response.result,
+        documents: response.result.document.content,
+      });
+      setPagination({
+        page: response.result.document.page,
+        size: response.result.document.size,
+        totalElements: response.result.document.totalElements,
+        totalPages: response.result.document.totalPages,
+      });
     } catch (error) {
       console.error("Error fetching library:", error);
     } finally {
@@ -195,27 +176,14 @@ function LibraryDetail() {
     <div className={cx("library-detail")}>
       <div className={cx("header")}>
         <div className={cx("header-actions")}>
-          <Button
-            icon={<ArrowLeftOutlined />}
-            onClick={() => navigate("/library")}
-            className={cx("back-button")}
-          >
+          <Button icon={<ArrowLeftOutlined />} onClick={() => navigate("/library")} className={cx("back-button")}>
             Quay lại
           </Button>
           <div className={cx("action-buttons")}>
-            <Button
-              icon={<EditOutlined />}
-              onClick={() => setShowEditModal(true)}
-              type="primary"
-              ghost
-            >
+            <Button icon={<EditOutlined />} onClick={() => setShowEditModal(true)} type="primary" ghost>
               Sửa
             </Button>
-            <Button
-              icon={<DeleteOutlined />}
-              onClick={handleDeleteLibrary}
-              danger
-            >
+            <Button icon={<DeleteOutlined />} onClick={handleDeleteLibrary} danger>
               Xóa
             </Button>
           </div>
@@ -226,11 +194,7 @@ function LibraryDetail() {
             <Title level={2}>{library.name}</Title>
             <Text type="secondary">{library.description}</Text>
             <div className={cx("user-info")}>
-              <img
-                src={library.user.avatarUser}
-                alt={library.user.userName}
-                className={cx("avatar")}
-              />
+              <img src={library.user.avatarUser} alt={library.user.userName} className={cx("avatar")} />
               <Text>{library.user.userName}</Text>
             </div>
           </div>
@@ -265,35 +229,22 @@ function LibraryDetail() {
                         Xóa
                       </Button>,
 
-                      <Button
-                        type="text"
-                        icon={<BellOutlined />}
-                        onClick={() => setShowReminderList(true)}
-                      >
+                      <Button type="text" icon={<BellOutlined />} onClick={() => setShowReminderList(true)}>
                         Nhắc nhở
                       </Button>,
                     ]}
                   >
-                    <div
-                      onClick={() => handleReadDoc(item.document.id)}
-                      className={cx("document-content")}
-                    >
+                    <div onClick={() => handleReadDoc(item.document.id)} className={cx("document-content")}>
                       <Badge.Ribbon
-                        text={
-                          item.status === "COMPLETED" ? "Đã đọc" : "Chưa đọc"
-                        }
+                        text={item.status === "COMPLETED" ? "Đã đọc" : "Chưa đọc"}
                         color={item.status === "COMPLETED" ? "green" : "blue"}
                       >
                         <div className={cx("document-content")}>
                           <Title level={4}>{item.document.title}</Title>
-                          <Paragraph ellipsis={{ rows: 2 }}>
-                            {item.document.description}
-                          </Paragraph>
+                          <Paragraph ellipsis={{ rows: 2 }}>{item.document.description}</Paragraph>
 
                           <div className={cx("document-meta")}>
-                            <Tag color="blue">
-                              {item.document.category.name}
-                            </Tag>
+                            <Tag color="blue">{item.document.category.name}</Tag>
                             <div className={cx("stats")}>
                               <span>
                                 <EyeOutlined /> {item.document.views}
@@ -336,10 +287,7 @@ function LibraryDetail() {
         title="Chỉnh sửa thư viện"
       />
 
-      <ReminderForm
-        open={showReminderList}
-        onCancel={() => setShowReminderList(false)}
-      />
+      <ReminderForm open={showReminderList} onCancel={() => setShowReminderList(false)} />
     </div>
   );
 }

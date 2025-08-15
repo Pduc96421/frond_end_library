@@ -1,23 +1,5 @@
-import {
-  Table,
-  Button,
-  Space,
-  Card,
-  Row,
-  Col,
-  Tag,
-  Dropdown,
-  Modal,
-} from "antd";
-import {
-  UserAddOutlined,
-  MoreOutlined,
-  EyeOutlined,
-  EditOutlined,
-  LockOutlined,
-  UnlockOutlined,
-  KeyOutlined,
-} from "@ant-design/icons";
+import { Table, Button, Card, Row, Col, Tag, Dropdown, Modal } from "antd";
+import { MoreOutlined, EyeOutlined, LockOutlined, UnlockOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
@@ -45,31 +27,19 @@ function Users() {
   const fetchApiData = async (params = {}) => {
     try {
       setLoading(true);
-      const { page = pagination.current - 1, pageSize = pagination.pageSize } =
-        params;
+      const { page = pagination.current - 1, pageSize = pagination.pageSize } = params;
       const keyword = searchParams.get("keyword");
 
-      const response = keyword
-        ? await searchUsers(keyword, page, pageSize)
-        : await getUsers(page, pageSize);
+      const response = keyword ? await searchUsers(keyword, page, pageSize) : await getUsers(page, pageSize);
 
-      if (response.code === 200) {
-        setDataUsers(response.result.content || []);
-        setPagination((prev) => ({
-          ...prev,
-          total: response.result.totalElements || 0,
-        }));
-      } else {
-        throw new Error(response.message || "Có lỗi xảy ra");
-      }
+      setDataUsers(response.result.content || []);
+      setPagination((prev) => ({
+        ...prev,
+        total: response.result.totalElements || 0,
+      }));
     } catch (error) {
       console.error("Error fetching users:", error);
-      dispatch(
-        showAlert(
-          error.message || "Không thể tải danh sách người dùng",
-          "error"
-        )
-      );
+      dispatch(showAlert(error.message || "Không thể tải danh sách người dùng", "error"));
     } finally {
       setLoading(false);
     }
@@ -77,7 +47,7 @@ function Users() {
 
   useEffect(() => {
     fetchApiData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, pagination.current, pagination.pageSize]);
 
   const handleTableChange = (newPagination) => {
@@ -87,7 +57,7 @@ function Users() {
   const handleStatusChange = async (userId) => {
     await deleteUser(userId);
     fetchApiData(pagination.current, pagination.pageSize);
-  }
+  };
 
   const columns = [
     {
@@ -95,8 +65,7 @@ function Users() {
       key: "index",
       width: 70,
       align: "center",
-      render: (_, __, index) =>
-        (pagination.current - 1) * pagination.pageSize + index + 1,
+      render: (_, __, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     {
       title: "Ảnh đại diện",
@@ -105,11 +74,7 @@ function Users() {
       align: "center",
       render: (_, record) => (
         <div className={cx("avatar-container")}>
-          <img
-            src={record.avatarUrl}
-            alt={record.fullName}
-            className={cx("avatar-image")}
-          />
+          <img src={record.avatarUrl} alt={record.fullName} className={cx("avatar-image")} />
         </div>
       ),
     },
@@ -134,9 +99,7 @@ function Users() {
       width: 120,
       align: "center",
       render: (status) => (
-        <Tag color={status === "active" ? "success" : "error"}>
-          {status === "active" ? "Hoạt động" : "Tạm khóa"}
-        </Tag>
+        <Tag color={status === "ACTIVE" ? "success" : "error"}>{status === "ACTIVE" ? "Hoạt động" : "Tạm khóa"}</Tag>
       ),
     },
     {
@@ -157,23 +120,15 @@ function Users() {
               { type: "divider" },
               {
                 key: "status",
-                label:
-                  record.status === "active" ? "Khóa tài khoản" : "Mở khóa",
-                icon:
-                  record.status === "active" ? (
-                    <LockOutlined />
-                  ) : (
-                    <UnlockOutlined />
-                  ),
-                danger: record.status === "active",
+                label: record.status === "ACTIVE" ? "Khóa tài khoản" : "Mở khóa",
+                icon: record.status === "ACTIVE" ? <LockOutlined /> : <UnlockOutlined />,
+                danger: record.status === "ACTIVE",
                 onClick: () => {
                   Modal.confirm({
-                    title: `Xác nhận ${
-                      record.status === "active" ? "khóa" : "mở khóa"
-                    } tài khoản`,
-                    content: `Bạn có chắc chắn muốn ${
-                      record.status === "active" ? "khóa" : "mở khóa"
-                    } tài khoản của ${record.fullName}?`,
+                    title: `Xác nhận ${record.status === "ACTIVE" ? "khóa" : "mở khóa"} tài khoản`,
+                    content: `Bạn có chắc chắn muốn ${record.status === "ACTIVE" ? "khóa" : "mở khóa"} tài khoản của ${
+                      record.fullName
+                    }?`,
                     okText: "Xác nhận",
                     cancelText: "Hủy",
                     onOk: () => handleStatusChange(record.id),

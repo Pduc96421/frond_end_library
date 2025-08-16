@@ -249,7 +249,7 @@ const FileUploadPage = () => {
         </Form.Item>
 
         {/* Public/Private */}
-        <Form.Item name="isPublic" label={<span className={cx("formLabel")}>Công khai</span>} valuePropName="checked">
+        <Form.Item name="is_public" label={<span className={cx("formLabel")}>Công khai</span>} valuePropName="checked">
           <Switch checkedChildren="Công khai" unCheckedChildren="Riêng tư" className={cx("switchPublic")} />
         </Form.Item>
 

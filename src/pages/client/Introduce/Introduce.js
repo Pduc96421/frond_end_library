@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useState } from 'react';
 import RegisterModal from '~/pages/client/Register/RegisterModal';
 import LoginModal from '~/pages/client/Login/LoginModal';
-import ForgotPasswordModal from '~/pages/client/ForgotPassword';
+import ForgotPasswordModal from '~/pages/client/forgotPassword/ForgotPasswordModel';
 
 const cx = classNames.bind(styles);
 

@@ -18,7 +18,7 @@ import styles from "./Header.module.scss";
 import logo from "~/assets/images/logo.png";
 import RegisterModal from "~/pages/client/Register";
 import LoginModal from "~/pages/client/Login/LoginModal";
-import ForgotPasswordModal from "~/pages/client/ForgotPassword";
+import ForgotPasswordModal from "~/pages/client/forgotPassword/ForgotPasswordModel";
 import config from "~/config";
 import { checkLogin } from "~/store/actions/login";
 import { deleteCookie } from "~/helpers/cookie";

@@ -36,8 +36,15 @@ function LoginModal({ open, onClose, onForgotPassword, onRegister }) {
       const targetPage = userData.role === "ADMIN" ? "/admin" : "/";
       navigate(targetPage);
     } catch (error) {
-      console.error("Lỗi đăng nhập:", error);
-      dispatch(showAlert("Đăng nhập thất bại", "error"));
+      if (error.status === 402) {
+        const email = error.response?.data?.result?.email;
+        dispatch(showAlert("Hãy xác minh tài khoản của bạn", "error"));
+        navigate(`/verify-account?email=${email}`);
+        onClose();
+      } else {
+        console.error("Lỗi đăng nhập:", error);
+        dispatch(showAlert("Đăng nhập thất bại", "error"));
+      }
     } finally {
       setLoading(false);
     }

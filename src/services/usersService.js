@@ -29,17 +29,11 @@ export const getUserById = async (userId) => {
 // Update user
 export const updateUser = async (id, data) => {
   try {
-    // Debug
-    // console.log(`Updating user ${id} with:`, data);
-
-    // Đảm bảo các headers được đặt đúng để xử lý FormData
     const response = await request.put(`users/${id}`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-
-    // console.log('Update response:', response);
     return response;
   } catch (error) {
     console.error("Update user error:", error);
@@ -80,27 +74,25 @@ export const getUserInfo = async () => {
 // Change password
 export const changePassword = async (data) => {
   try {
-    // Đảm bảo có token xác thực
-    const token = getCookie("token") || localStorage.getItem('token');
+    const token = getCookie("token") || localStorage.getItem("token");
     if (!token) {
       throw new Error("Không có token xác thực");
     }
-    
-    // Gọi API với headers đúng
-    const response = await request.put('/users/change-password', data, {
+
+    const response = await request.put("/users/change-password", data, {
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
-    
+
     return response;
   } catch (error) {
     console.error("Lỗi API đổi mật khẩu:", error.message);
     if (error.response) {
       console.error("Phản hồi từ server:", {
         status: error.response.status,
-        data: error.response.data
+        data: error.response.data,
       });
     }
     throw error;
@@ -118,6 +110,33 @@ export const searchUsers = async (keyword, page = 0, size = 10) => {
     });
     return response;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const requestForgotPasswordOTP = async (email) => {
+  try {
+    const response = await request.post("/users/forgot-password", { email });
+    return response;
+  } catch (error) {
+    console.error("Lỗi gửi OTP quên mật khẩu:", error.message);
+    throw error;
+  }
+};
+
+// Verify OTP and get new password
+export const verifyForgotPasswordOTP = async (data) => {
+  try {
+    const response = await request.post("/users/verify-forgot-password", data);
+    return response;
+  } catch (error) {
+    console.error("Lỗi xác thực OTP:", error.message);
+    if (error.response) {
+      console.error("Phản hồi từ server:", {
+        status: error.response.status,
+        data: error.response.data,
+      });
+    }
     throw error;
   }
 };

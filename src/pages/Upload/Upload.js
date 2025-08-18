@@ -88,7 +88,7 @@ const FileUploadPage = () => {
       formData.append("title", values.title);
       formData.append("description", values.description || "");
 
-      formData.append("isPublic", values.isPublic);
+      formData.append("is_public", values.isPublic);
       const selectedCategory = dataCategories.find((cat) => cat.value === values.categoryName);
       if (selectedCategory) {
         formData.append("category_id", selectedCategory.value);

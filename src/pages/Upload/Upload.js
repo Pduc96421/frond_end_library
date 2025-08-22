@@ -42,10 +42,8 @@ const FileUploadPage = () => {
       try {
         setLoading(true);
         const response = await getCategories();
-        if (response.code === 200) {
-          const transformedCategories = transformCategories(response.result);
-          setDataCategories(transformedCategories);
-        }
+        const transformedCategories = transformCategories(response.result);
+        setDataCategories(transformedCategories);
       } catch (error) {
         console.error("Error fetching categories:", error);
         dispatch(showAlert("Lấy danh mục thất bại", "error"));
@@ -60,10 +58,8 @@ const FileUploadPage = () => {
   const handleUploadChange = (info) => {
     let fileList = [...info.fileList];
 
-    // Giới hạn chỉ 1 file
     fileList = fileList.slice(-1);
 
-    // Cập nhật trạng thái file
     fileList = fileList.map((file) => {
       if (file.response) {
         file.url = file.response.url;
@@ -88,7 +84,7 @@ const FileUploadPage = () => {
       formData.append("title", values.title);
       formData.append("description", values.description || "");
 
-      formData.append("is_public", values.isPublic);
+      formData.append("is_public", values.is_public);
       const selectedCategory = dataCategories.find((cat) => cat.value === values.categoryName);
       if (selectedCategory) {
         formData.append("category_id", selectedCategory.value);

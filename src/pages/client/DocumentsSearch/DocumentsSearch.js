@@ -1,7 +1,7 @@
 import { useParams, useSearchParams, Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./DocumentsSearch.module.scss";
-import { getTags, likeDocument, searchDocument } from "~/services/documentService";
+import { getTags, searchDocument } from "~/services/documentService";
 import { useState, useEffect } from "react";
 import { Pagination, Empty, Select, Row, Col, Image, Button, Tooltip } from "antd";
 import { useDispatch } from "react-redux";
@@ -55,28 +55,16 @@ function DocumentsSearch() {
       const searchKeyword = keyword?.trim() || "";
 
       const response = await searchDocument(searchKeyword, tag, page - 1, pageSize);
-      if (response.code === 200) {
-        setDocuments(response.result.content);
-        setPagination((prev) => ({
-          ...prev,
-          current: page,
-          pageSize: pageSize,
-          total: response.result.totalElements,
-        }));
-      } else {
-        setDocuments([]);
-        setPagination((prev) => ({
-          ...prev,
-          total: 0,
-        }));
-        dispatch(showAlert("Không tìm thấy tài liệu phù hợp!", "warning"));
-      }
-    } catch (error) {
-      setDocuments([]);
+      setDocuments(response.result.content);
       setPagination((prev) => ({
         ...prev,
-        total: 0,
+        current: page,
+        pageSize: pageSize,
+        total: response.result.totalElements,
       }));
+    } catch (error) {
+      setDocuments([]);
+      setPagination((prev) => ({ ...prev, total: 0 }));
       dispatch(showAlert("Lỗi khi tải danh sách tài liệu!", "error"));
     } finally {
       setLoading(false);
@@ -113,13 +101,11 @@ function DocumentsSearch() {
   const handleTagChange = (selectedValue) => {
     setSelectedTag(selectedValue);
 
-    // Reset to first page when filter changes
     setPagination((prev) => ({
       ...prev,
       current: 1,
     }));
 
-    // Update the URL with the selected tag
     const params = new URLSearchParams(searchParams);
 
     if (selectedValue) {

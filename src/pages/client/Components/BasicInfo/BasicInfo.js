@@ -55,7 +55,6 @@ function BasicInfo({ avatar, setAvatar }) {
 			setFetchingProfile(true);
 
 			const response = await getUserInfo();
-			// console.log("User profile response:", response);
 
 			if (response && response.code === 200) {
 				// Lấy dữ liệu mới

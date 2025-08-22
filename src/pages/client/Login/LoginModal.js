@@ -10,6 +10,7 @@ import { checkLogin } from "~/store/actions/login";
 import { showAlert } from "~/store/actions/alert";
 import { login } from "~/services/authService";
 import { decodeToken } from "~/utils/authUtils";
+import { getUserInfo } from "~/services/usersService";
 
 const cx = classNames.bind(styles);
 
@@ -23,12 +24,13 @@ function LoginModal({ open, onClose, onForgotPassword, onRegister }) {
     try {
       setLoading(true);
       const response = await login(values.emailPhone, values.password);
-
       const token = response.result.token;
       setCookie("token", token);
 
+
       const userData = decodeToken(token);
-      localStorage.setItem("userData", JSON.stringify(userData));
+      const resUser = await getUserInfo();
+      localStorage.setItem("userData", JSON.stringify(resUser.result));
       dispatch(checkLogin(true, userData));
       dispatch(showAlert("Đăng nhập thành công!", "success"));
       onClose();

@@ -1,31 +1,10 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import {
-  Table,
-  Button,
-  Modal,
-  Space,
-  Tooltip,
-  Card,
-  Row,
-  Col,
-  Tag,
-} from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { Table, Button, Modal, Space, Tooltip, Card, Row, Col, Tag } from "antd";
+import { EditOutlined, DeleteOutlined, PlusOutlined, EyeOutlined } from "@ant-design/icons";
 
 import styles from "./Categories.module.scss";
-import {
-  addCategory,
-  deleteCategory,
-  getCategories,
-  searchCategory,
-  updateCategory,
-} from "~/services/categoryService";
+import { addCategory, deleteCategory, getCategories, searchCategory, updateCategory } from "~/services/categoryService";
 import { useDispatch } from "react-redux";
 import { showAlert } from "~/store/actions/alert";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -48,9 +27,7 @@ function Categories() {
     try {
       setLoading(true);
       const response = await getCategories();
-      if (response.code === 200) {
-        setDataCategories(response.result);
-      }
+      setDataCategories(response.result);
     } catch (error) {
       console.error("Error fetching categories:", error);
       dispatch(showAlert("Lấy danh mục thất bại", "error"));
@@ -162,10 +139,10 @@ function Categories() {
       render: (_, record) => {
         return (
           <Tag
-            color={record.status === "active" ? "success" : "error"}
+            color={record.status === "ACTIVE" ? "success" : "error"}
             onClick={() => console.log("Status clicked:", record.status)}
           >
-            {record.status === "active" ? "Đang hoạt động" : "Ngừng hoạt động"}
+            {record.status === "ACTIVE" ? "Đang hoạt động" : "Ngừng hoạt động"}
           </Tag>
         );
       },
@@ -180,20 +157,14 @@ function Categories() {
           <Tooltip title="Xem chi tiết">
             <Button
               icon={<EyeOutlined />}
-              onClick={() =>
-                navigate(`/admin/categories/detail/${record.id}/documents`)
-              }
+              onClick={() => navigate(`/admin/categories/detail/${record.id}/documents`)}
             />
           </Tooltip>
           <Tooltip title="Chỉnh sửa">
             <Button icon={<EditOutlined />} onClick={() => showModal(record)} />
           </Tooltip>
           <Tooltip title="Xóa">
-            <Button
-              danger
-              icon={<DeleteOutlined />}
-              onClick={() => handleDelete(record.id)}
-            />
+            <Button danger icon={<DeleteOutlined />} onClick={() => handleDelete(record.id)} />
           </Tooltip>
         </Space>
       ),
@@ -220,11 +191,7 @@ function Categories() {
           </Col>
           <Col xs={24} sm={8} md={8} className={cx("button-col")}>
             <Space>
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => showModal()}
-              >
+              <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()}>
                 Thêm danh mục
               </Button>
             </Space>

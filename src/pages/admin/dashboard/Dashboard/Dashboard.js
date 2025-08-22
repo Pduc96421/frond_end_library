@@ -1,30 +1,11 @@
 import classNames from "classnames/bind";
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Card,
-  Statistic,
-  Typography,
-  List,
-  Button,
-  Image,
-} from "antd";
-import {
-  FileTextOutlined,
-  UserOutlined,
-  AppstoreOutlined,
-  TagsOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { Row, Col, Card, Statistic, Typography, List, Button, Image } from "antd";
+import { FileTextOutlined, UserOutlined, AppstoreOutlined, TagsOutlined, EyeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 // Import API functions
-import {
-  getAllDocuments,
-  getTags,
-  getTopDocument,
-} from "~/services/documentService";
+import { getAllDocuments, getTags, getTopDocument } from "~/services/documentService";
 import { getUsers } from "~/services/usersService";
 import { getCategories } from "~/services/categoryService";
 import styles from "./Dashboard.module.scss";
@@ -50,13 +31,7 @@ const Dashboard = () => {
         setLoading(true);
 
         // Fetch all required data in parallel
-        const [
-          documentsData,
-          usersData,
-          categoriesData,
-          tagsData,
-          topDocsData,
-        ] = await Promise.all([
+        const [documentsData, usersData, categoriesData, tagsData, topDocsData] = await Promise.all([
           getAllDocuments(0, 1),
           getUsers(0, 1),
           getCategories(),
@@ -92,12 +67,7 @@ const Dashboard = () => {
       <Row gutter={[16, 16]} className="mb-6">
         <Col xs={24} sm={12} md={6}>
           <Card hoverable>
-            <Statistic
-              title="Tổng tài liệu"
-              value={stats.documents}
-              prefix={<FileTextOutlined />}
-              loading={loading}
-            />
+            <Statistic title="Tổng tài liệu" value={stats.documents} prefix={<FileTextOutlined />} loading={loading} />
             <div className="mt-4">
               <Link to="/admin/documents">
                 <Button type="link" className="p-0">
@@ -110,12 +80,7 @@ const Dashboard = () => {
 
         <Col xs={24} sm={12} md={6}>
           <Card hoverable>
-            <Statistic
-              title="Người dùng"
-              value={stats.users}
-              prefix={<UserOutlined />}
-              loading={loading}
-            />
+            <Statistic title="Người dùng" value={stats.users} prefix={<UserOutlined />} loading={loading} />
             <div className="mt-4">
               <Link to="/admin/users">
                 <Button type="link" className="p-0">
@@ -128,12 +93,7 @@ const Dashboard = () => {
 
         <Col xs={24} sm={12} md={6}>
           <Card hoverable>
-            <Statistic
-              title="Danh mục"
-              value={stats.categories}
-              prefix={<AppstoreOutlined />}
-              loading={loading}
-            />
+            <Statistic title="Danh mục" value={stats.categories} prefix={<AppstoreOutlined />} loading={loading} />
             <div className="mt-4">
               <Link to="/admin/categories">
                 <Button type="link" className="p-0">
@@ -146,12 +106,7 @@ const Dashboard = () => {
 
         <Col xs={24} sm={12} md={6}>
           <Card hoverable>
-            <Statistic
-              title="Tags"
-              value={stats.tags}
-              prefix={<TagsOutlined />}
-              loading={loading}
-            />
+            <Statistic title="Tags" value={stats.tags} prefix={<TagsOutlined />} loading={loading} />
             <div className="mt-4">
               <Link to="/admin/documents/all-tag">
                 <Button type="link" className="p-0">
@@ -191,11 +146,7 @@ const Dashboard = () => {
                         preview={false}
                       />
                     }
-                    title={
-                      <Link to={`/admin/documents/detail/${document.id}`}>
-                        {document.title}
-                      </Link>
-                    }
+                    title={<Link to={`/admin/documents/detail/${document.id}`}>{document.title}</Link>}
                     description={
                       <>
                         <div>{document.description?.substring(0, 100)}...</div>

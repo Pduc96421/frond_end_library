@@ -4,7 +4,7 @@ import * as request from "~/utils/request";
 // Get Users list with pagination
 export const getUsers = async (page = 0, size = 10) => {
   try {
-    const response = await request.get(`users/detail`, { params: { page, size } });
+    const response = await request.get(`users`, { params: { page, size } });
     return response;
   } catch (error) {
     throw error;
@@ -14,7 +14,7 @@ export const getUsers = async (page = 0, size = 10) => {
 // Get user details by ID
 export const getUserById = async (userId) => {
   try {
-    const response = await request.get(`users/${userId}`);
+    const response = await request.get(`users/${userId}/detail`);
     return response;
   } catch (error) {
     throw error;

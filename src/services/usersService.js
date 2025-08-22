@@ -4,13 +4,8 @@ import * as request from "~/utils/request";
 // Get Users list with pagination
 export const getUsers = async (page = 0, size = 10) => {
   try {
-    const response = await request.get(`users`, {
-      params: {
-        page,
-        size,
-      },
-    });
-    return response; // Return pagination result from API
+    const response = await request.get(`users/detail`, { params: { page, size } });
+    return response;
   } catch (error) {
     throw error;
   }

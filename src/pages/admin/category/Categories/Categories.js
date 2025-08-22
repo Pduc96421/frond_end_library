@@ -40,9 +40,7 @@ function Categories() {
     try {
       setLoading(true);
       const response = await searchCategory(keyword);
-      if (response.code === 200) {
-        setDataCategories(response.result);
-      }
+      setDataCategories(response.result);
     } catch (error) {
       console.error("Error fetching categories:", error);
       dispatch(showAlert("Lấy danh mục thất bại", "error"));

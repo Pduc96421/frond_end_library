@@ -1,15 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Table,
-  Space,
-  Button,
-  Tooltip,
-  Card,
-  Row,
-  Col,
-  Tag,
-  Dropdown,
-} from "antd";
+import { Table, Space, Button, Tooltip, Card, Row, Col, Tag, Dropdown } from "antd";
 import {
   DeleteOutlined,
   EyeOutlined,
@@ -18,12 +8,7 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import classNames from "classnames/bind";
 
@@ -64,8 +49,7 @@ function AllDocument() {
       key: "index",
       width: 60,
       align: "center",
-      render: (_, __, index) =>
-        (pagination.current - 1) * pagination.pageSize + index + 1,
+      render: (_, __, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     {
       title: "Preview",
@@ -140,20 +124,10 @@ function AllDocument() {
             placement="bottom"
           >
             <Tag
-              color={
-                record.status === "APPROVED"
-                  ? "success"
-                  : record.status === "REJECTED"
-                  ? "error"
-                  : "warning"
-              }
+              color={record.status === "APPROVED" ? "success" : record.status === "REJECTED" ? "error" : "warning"}
               className={cx("status")}
             >
-              {record.status === "APPROVED"
-                ? "Đã duyệt"
-                : record.status === "REJECTED"
-                ? "Từ chối"
-                : "Chờ duyệt"}
+              {record.status === "APPROVED" ? "Đã duyệt" : record.status === "REJECTED" ? "Từ chối" : "Chờ duyệt"}
             </Tag>
           </Dropdown>
         );
@@ -167,17 +141,10 @@ function AllDocument() {
       render: (_, record) => (
         <Space size="middle" className={cx("action-buttons")}>
           <Tooltip title="Xem chi tiết">
-            <Button
-              icon={<EyeOutlined />}
-              onClick={() => navigate(`/admin/documents/detail/${record.id}`)}
-            />
+            <Button icon={<EyeOutlined />} onClick={() => navigate(`/admin/documents/detail/${record.id}`)} />
           </Tooltip>
           <Tooltip title="Xóa">
-            <Button
-              danger
-              icon={<DeleteOutlined />}
-              onClick={() => handleDelete(record.id)}
-            />
+            <Button danger icon={<DeleteOutlined />} onClick={() => handleDelete(record.id)} />
           </Tooltip>
         </Space>
       ),
@@ -189,9 +156,7 @@ function AllDocument() {
       setLoading(true);
       const response = await getAllDocuments(page - 1, pageSize);
 
-      if (response.code === 200) {
-        setDocuments(response.result.content);
-      }
+      setDocuments(response.result.content);
       setPagination({
         current: page,
         pageSize: pageSize,
@@ -227,11 +192,7 @@ function AllDocument() {
   const fetchDocumentsByCategory = async (categoryId, page, pageSize) => {
     try {
       setLoading(true);
-      const response = await getCategoryDocument(
-        categoryId,
-        page - 1,
-        pageSize
-      );
+      const response = await getCategoryDocument(categoryId, page - 1, pageSize);
 
       if (response.code === 200) {
         setDocuments(response.result.content);
@@ -324,18 +285,9 @@ function AllDocument() {
     const isPendingRoute = location.pathname.includes("/pending");
 
     if (keyword || tag) {
-      fetchSearchDocuments(
-        keyword,
-        tag,
-        pagination.current,
-        pagination.pageSize
-      );
+      fetchSearchDocuments(keyword, tag, pagination.current, pagination.pageSize);
     } else if (categoryId) {
-      fetchDocumentsByCategory(
-        categoryId,
-        pagination.current,
-        pagination.pageSize
-      );
+      fetchDocumentsByCategory(categoryId, pagination.current, pagination.pageSize);
     } else if (isPendingRoute) {
       fetchDocumentsPending(pagination.current, pagination.pageSize);
     } else {
@@ -385,11 +337,7 @@ function AllDocument() {
               >
                 Lọc
               </Button>
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => navigate("/admin/documents/upload")}
-              >
+              <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate("/admin/documents/upload")}>
                 Thêm tài liệu
               </Button>
             </Space>

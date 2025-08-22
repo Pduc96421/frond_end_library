@@ -22,9 +22,7 @@ function DocumentDetail() {
     try {
       dispatch(showLoading());
       const response = await getDocumentById(id);
-      if (response.code === 200) {
-        setDocument(response.result);
-      }
+      setDocument(response.result);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -87,19 +85,10 @@ function DocumentDetail() {
         title={document.title}
         extra={
           <Space size="large" align="center">
-            <Button
-              type="primary"
-              onClick={() => handleApprove()}
-              disabled={document.status === "APPROVED"}
-            >
+            <Button type="primary" onClick={() => handleApprove()} disabled={document.status === "APPROVED"}>
               Duyệt bài
             </Button>
-            <Button
-              type="primary"
-              danger
-              onClick={() => handleReject()}
-              disabled={document.status === "REJECTED"}
-            >
+            <Button type="primary" danger onClick={() => handleReject()} disabled={document.status === "REJECTED"}>
               Từ chối
             </Button>
             <Button type="primary" onClick={() => navigate(-1)}>
@@ -126,11 +115,7 @@ function DocumentDetail() {
               <Descriptions.Item label="Trạng thái" span={2}>
                 <Tag
                   color={
-                    document.status === "APPROVED"
-                      ? "success"
-                      : document.status === "REJECTED"
-                      ? "error"
-                      : "warning"
+                    document.status === "APPROVED" ? "success" : document.status === "REJECTED" ? "error" : "warning"
                   }
                 >
                   {document.status === "APPROVED"

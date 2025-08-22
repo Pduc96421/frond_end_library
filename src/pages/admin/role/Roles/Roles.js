@@ -27,11 +27,7 @@ function Roles() {
     setLoading(true);
     try {
       const response = await getRoles();
-      if (response.code === 200) {
         setDataRoles(response.result);
-      } else {
-        dispatch(showAlert("Lỗi khi tải danh sách vai trò!", "error"));
-      }
     } catch (error) {
       console.error("Error fetching roles:", error);
       dispatch(showAlert("Lỗi khi tải danh sách vai trò!", "error"));

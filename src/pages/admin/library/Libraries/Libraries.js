@@ -1,16 +1,5 @@
-import {
-  Table,
-  Button,
-  Input,
-  Space,
-  Card,
-  Row,
-  Col,
-  Tag,
-  Dropdown,
-  Modal,
-} from "antd";
-import { PlusOutlined, MoreOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Table, Button, Input, Space, Card, Row, Col, Tag, Dropdown, Modal } from "antd";
+import { MoreOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import { useDispatch } from "react-redux";
@@ -40,20 +29,14 @@ function Library() {
 
       const response = await getAllLibraryOfUser(page, pageSize, search);
 
-      if (response.code === 200) {
-        setDataLibraries(response.result.content || []);
-        setPagination((prev) => ({
-          ...prev,
-          total: response.result.totalElements || 0,
-        }));
-      } else {
-        throw new Error(response.message || "Có lỗi xảy ra");
-      }
+      setDataLibraries(response.result.content || []);
+      setPagination((prev) => ({
+        ...prev,
+        total: response.result.totalElements || 0,
+      }));
     } catch (error) {
       console.error("Error fetching libraries:", error);
-      dispatch(
-        showAlert(error.message || "Không thể tải danh sách thư viện", "error")
-      );
+      dispatch(showAlert(error.message || "Không thể tải danh sách thư viện", "error"));
     } finally {
       setLoading(false);
     }
@@ -89,8 +72,7 @@ function Library() {
       key: "index",
       width: 70,
       align: "center",
-      render: (_, __, index) =>
-        (pagination.current - 1) * pagination.pageSize + index + 1,
+      render: (_, __, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     {
       title: "Tên thư viện",
@@ -113,9 +95,7 @@ function Library() {
       width: 120,
       align: "center",
       sorter: true,
-      render: (count) => (
-        <Tag color={count > 0 ? "blue" : "default"}>{count} tài liệu</Tag>
-      ),
+      render: (count) => <Tag color={count > 0 ? "blue" : "default"}>{count} tài liệu</Tag>,
     },
     {
       title: "Người tạo",

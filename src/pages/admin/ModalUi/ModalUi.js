@@ -5,13 +5,7 @@ import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 
-function ModalUi({
-  isOpen,
-  onCancel,
-  onSubmit,
-  editingData = null,
-  loading = false,
-}) {
+function ModalUi({ isOpen, onCancel, onSubmit, editingData = null, loading = false }) {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -45,18 +39,8 @@ function ModalUi({
       footer={null}
       destroyOnClose
     >
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleSubmit}
-        className={cx("category-form")}
-        preserve={false}
-      >
-        <Form.Item
-          name="name"
-          label="Tên danh mục"
-          rules={[{ required: true, message: "Vui lòng nhập tên danh mục" }]}
-        >
+      <Form form={form} layout="vertical" onFinish={handleSubmit} className={cx("category-form")} preserve={false}>
+        <Form.Item name="name" label="Tên danh mục" rules={[{ required: true, message: "Vui lòng nhập tên danh mục" }]}>
           <Input placeholder="Nhập tên danh mục" />
         </Form.Item>
 

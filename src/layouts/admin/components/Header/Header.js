@@ -12,6 +12,7 @@ import Notification from "../Notification";
 const cx = classNames.bind(styles);
 
 function Header() {
+  // eslint-disable-next-line no-unused-vars
   const { isLoggedIn, userData } = useSelector((state) => state.loginReducer);
 
   const navigate = useNavigate();

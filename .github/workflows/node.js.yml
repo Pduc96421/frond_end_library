@@ -9,16 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
-      - run: npm install
-      - run: npm run build
+      - name: Install dependencies
+        run: npm install
 
-      - name: Deploy to Vercel
-        run: |
-          npm install -g vercel
-          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build React app
+        run: npm run build
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel (Production)
+        run: vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}

@@ -1,6 +1,17 @@
-import { Table, Button, Input, Space, Card, Row, Col, Tag, Dropdown, Modal } from "antd";
+import {
+  Table,
+  Button,
+  Input,
+  Space,
+  Card,
+  Row,
+  Col,
+  Tag,
+  Dropdown,
+  Modal,
+} from "antd";
 import { MoreOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import classNames from "classnames/bind";
 import { useDispatch } from "react-redux";
 
@@ -13,6 +24,7 @@ const { Search } = Input;
 
 function Library() {
   const dispatch = useDispatch();
+
   const [dataLibraries, setDataLibraries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -22,41 +34,56 @@ function Library() {
     total: 0,
   });
 
-  const fetchLibraries = async (params = {}) => {
-    try {
-      setLoading(true);
-      const { page = 0, pageSize = 10, search = "" } = params;
+  // ================= FETCH DATA =================
+  const fetchLibraries = useCallback(
+    async ({ page, pageSize, search }) => {
+      try {
+        setLoading(true);
 
-      const response = await getAllLibraryOfUser(page, pageSize, search);
+        const response = await getAllLibraryOfUser(page, pageSize, search);
 
-      setDataLibraries(response.result.content || []);
-      setPagination((prev) => ({
-        ...prev,
-        total: response.result.totalElements || 0,
-      }));
-    } catch (error) {
-      console.error("Error fetching libraries:", error);
-      dispatch(showAlert(error.message || "Không thể tải danh sách thư viện", "error"));
-    } finally {
-      setLoading(false);
-    }
-  };
+        setDataLibraries(response?.result?.content || []);
+        setPagination((prev) => ({
+          ...prev,
+          total: response?.result?.totalElements || 0,
+        }));
+      } catch (error) {
+        console.error("Error fetching libraries:", error);
+        dispatch(
+          showAlert(
+            error?.message || "Không thể tải danh sách thư viện",
+            "error",
+          ),
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [dispatch],
+  );
 
+  // ================= EFFECT =================
   useEffect(() => {
     fetchLibraries({
       page: pagination.current - 1,
       pageSize: pagination.pageSize,
       search: searchText,
     });
-  }, [pagination.current, pagination.pageSize, searchText]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchLibraries, pagination.current, pagination.pageSize, searchText]);
 
+  // ================= HANDLERS =================
   const handleSearch = (value) => {
     setSearchText(value);
-    setPagination((prev) => ({ ...prev, current: 1 })); // Reset to first page
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+    }));
   };
 
   const handleTableChange = (newPagination, filters, sorter) => {
     setPagination(newPagination);
+
     fetchLibraries({
       page: newPagination.current - 1,
       pageSize: newPagination.pageSize,
@@ -66,13 +93,43 @@ function Library() {
     });
   };
 
+  const handleDelete = (record) => {
+    Modal.confirm({
+      title: "Xác nhận xóa thư viện",
+      content: `Bạn có chắc chắn muốn xóa thư viện "${record.name}"?`,
+      okText: "Xóa",
+      okType: "danger",
+      cancelText: "Hủy",
+      onOk: async () => {
+        try {
+          const response = await deleteLibrary(record.id);
+
+          if (response?.code === 200) {
+            dispatch(showAlert("Xóa thư viện thành công", "success"));
+
+            fetchLibraries({
+              page: pagination.current - 1,
+              pageSize: pagination.pageSize,
+              search: searchText,
+            });
+          }
+        } catch (error) {
+          console.error("Error deleting library:", error);
+          dispatch(showAlert("Không thể xóa thư viện", "error"));
+        }
+      },
+    });
+  };
+
+  // ================= TABLE COLUMNS =================
   const columns = [
     {
       title: "STT",
       key: "index",
       width: 70,
       align: "center",
-      render: (_, __, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
+      render: (_, __, index) =>
+        (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     {
       title: "Tên thư viện",
@@ -95,7 +152,9 @@ function Library() {
       width: 120,
       align: "center",
       sorter: true,
-      render: (count) => <Tag color={count > 0 ? "blue" : "default"}>{count} tài liệu</Tag>,
+      render: (count) => (
+        <Tag color={count > 0 ? "blue" : "default"}>{count} tài liệu</Tag>
+      ),
     },
     {
       title: "Người tạo",
@@ -104,11 +163,11 @@ function Library() {
       render: (_, record) => (
         <Space>
           <img
-            src={record.user.avatarUser || "/default-avatar.png"}
-            alt={record.user.userName}
+            src={record?.user?.avatarUser || "/default-avatar.png"}
+            alt={record?.user?.userName || "user"}
             className={cx("user-avatar")}
           />
-          <span>{record.user.userName || "Ẩn danh"}</span>
+          <span>{record?.user?.userName || "Ẩn danh"}</span>
         </Space>
       ),
     },
@@ -137,32 +196,7 @@ function Library() {
     },
   ];
 
-  const handleDelete = (record) => {
-    Modal.confirm({
-      title: "Xác nhận xóa thư viện",
-      content: `Bạn có chắc chắn muốn xóa thư viện "${record.name}"?`,
-      okText: "Xóa",
-      okType: "danger",
-      cancelText: "Hủy",
-      onOk: async () => {
-        try {
-          const response = await deleteLibrary(record.id);
-          if (response.code === 200) {
-            dispatch(showAlert("Xóa thư viện thành công", "success"));
-            fetchLibraries({
-              page: pagination.current - 1,
-              pageSize: pagination.pageSize,
-              search: searchText,
-            });
-          }
-        } catch (error) {
-          console.error("Error deleting library:", error);
-          dispatch(showAlert("Không thể xóa thư viện", "error"));
-        }
-      },
-    });
-  };
-
+  // ================= RENDER =================
   return (
     <div className={cx("library-container")}>
       <Card title="Danh sách thư viện">

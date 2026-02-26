@@ -1,14 +1,11 @@
-import { Card, Col, Input, Row, Table, Tooltip } from "antd";
+import { Card, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
-import { SearchOutlined } from "@ant-design/icons";
 
 import { getTags } from "~/services/documentService";
 import styles from "./Tags.module.scss";
 
 const cx = classNames.bind(styles);
-
-const { Search } = Input;
 
 function Tags() {
   const [dataTags, setDataTags] = useState([]);

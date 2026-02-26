@@ -13,10 +13,12 @@ import {
   faDownload,
   faLock,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function FrequentlyAskedQuestions() {
   const [activeCategory, setActiveCategory] = useState("general");
   const [openQuestions, setOpenQuestions] = useState({});
+  const navigate = useNavigate();
 
   // Toggle question open/closed state
   const toggleQuestion = (id) => {
@@ -792,7 +794,15 @@ function FrequentlyAskedQuestions() {
                       </ul>
                       <p>
                         Bạn có thể đọc chi tiết về cách chúng tôi xử lý dữ liệu
-                        trong <a href="#">Chính sách Bảo mật</a> của TTCS Doc.
+                        trong{" "}
+                        <button
+                          type="button"
+                          className="link-button"
+                          onClick={() => navigate("/privacy-policy")}
+                        >
+                          Chính sách Bảo mật
+                        </button>{" "}
+                        của TTCS Doc.
                       </p>
                     </div>
                   )}
@@ -941,9 +951,13 @@ function FrequentlyAskedQuestions() {
 
           <div className="faq-footer">
             <p>Bạn không tìm thấy câu trả lời cho câu hỏi của mình?</p>
-            <a href="#" className="contact-support-btn">
+            <button
+              type="button"
+              className="contact-support-btn"
+              onClick={() => navigate("/contact")}
+            >
               Liên hệ hỗ trợ
-            </a>
+            </button>
           </div>
         </div>
       </div>

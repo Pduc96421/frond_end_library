@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Tabs, Form, Card, Typography, Layout } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { UserOutlined, FileTextOutlined, LockOutlined,FileSearchOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Tabs, Form, Card, Typography, Layout } from "antd";
+import { useNavigate } from "react-router-dom";
+import {
+  UserOutlined,
+  FileTextOutlined,
+  LockOutlined,
+  FileSearchOutlined,
+} from "@ant-design/icons";
 
 // Import components
-import Header from '~/layouts/client/components/Header/Header';
-import Footer from '~/layouts/client/components/Footer/Footer';
-import BasicInfo from '../Components/BasicInfo/BasicInfo';
-import MyDocuments from '../Components/MyDocuments/MyDocuments';
-import SharedDocuments from '../Components/SharedDocuments/SharedDocuments'; // Import mới
+import Header from "~/layouts/client/components/Header/Header";
+import Footer from "~/layouts/client/components/Footer/Footer";
+import BasicInfo from "../Components/BasicInfo/BasicInfo";
+import MyDocuments from "../Components/MyDocuments/MyDocuments";
+import SharedDocuments from "../Components/SharedDocuments/SharedDocuments"; // Import mới
 
 import "./MyProfile.scss";
 
@@ -20,7 +25,6 @@ function MyProfile() {
   const { userData } = useSelector((state) => state.loginReducer);
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [passwordForm] = Form.useForm();
   const [activeTab, setActiveTab] = useState("1");
   const [avatar, setAvatar] = useState(userData?.avatarUrl || null);
 
@@ -62,17 +66,17 @@ function MyProfile() {
       children: <MyDocuments userData={userData} />,
     },
     {
-      key: '4', // Thêm tab mới cho tài liệu chia sẻ
+      key: "4", // Thêm tab mới cho tài liệu chia sẻ
       label: (
         <span className="tab-label">
-          <FileSearchOutlined/>
+          <FileSearchOutlined />
           <span>Tài liệu được chia sẻ</span>
         </span>
       ),
-      children: <SharedDocuments userData={userData} /> // Hiển thị tài liệu chia sẻ
+      children: <SharedDocuments userData={userData} />, // Hiển thị tài liệu chia sẻ
     },
     {
-      key: '3',
+      key: "3",
       label: (
         <span className="tab-label">
           <LockOutlined />

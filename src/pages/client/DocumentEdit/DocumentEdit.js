@@ -1,32 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  Form,
-  Input,
-  Button,
-  Upload,
-  Select,
-  message,
-  Card,
-  Spin,
-  Image,
-  Modal,
-} from "antd";
-import {
-  UploadOutlined,
-  DeleteOutlined,
-  SaveOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
+import { Form, Input, Button, Select, message, Card, Image, Modal } from "antd";
+import { SaveOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import classNames from "classnames/bind";
 import styles from "./DocumentEdit.module.scss";
 import { getDocumentById, updateDocument } from "~/services/documentService";
-import { getBase64 } from "~/helpers/getBase64";
 import { getCategories } from "~/services/categoryService";
 import Loading from "../Loading";
 
 const { TextArea } = Input;
-const { Option } = Select;
 const cx = classNames.bind(styles);
 
 function DocumentEdit() {
@@ -35,23 +17,22 @@ function DocumentEdit() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(true);
   const [document, setDocument] = useState(null);
-  const [fileList, setFileList] = useState([]);
+  const [fileList] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [categories, setCategories] = useState([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(false);
 
   useEffect(() => {
     fetchCategories();
     fetchDocument();
     // Thêm gọi hàm lấy danh mục
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentId]);
 
   // Thêm hàm để lấy tất cả danh mục
   const fetchCategories = async () => {
     try {
-      setCategoriesLoading(true);
       const response = await getCategories();
       if (response.code === 200) {
         setCategories(response.result);
@@ -59,8 +40,6 @@ function DocumentEdit() {
     } catch (error) {
       console.error("Error fetching categories:", error);
       message.error("Không thể tải danh sách danh mục");
-    } finally {
-      setCategoriesLoading(false);
     }
   };
   const fetchDocument = async () => {
@@ -101,7 +80,7 @@ function DocumentEdit() {
     try {
       // Tìm thông tin category từ ID
       const selectedCategory = categories.find(
-        (cat) => cat.id === values.categoryId
+        (cat) => cat.id === values.categoryId,
       );
       if (!selectedCategory) {
         message.error("Danh mục không hợp lệ");

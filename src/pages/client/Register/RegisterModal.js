@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Input, Button, Radio, DatePicker, Typography, message, Modal } from "antd";
+import { Form, Input, Button, DatePicker, message, Modal } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import dayjs from "dayjs";
@@ -79,10 +79,18 @@ function RegisterModal({ open, onClose, onLogin }) {
           >
             <Input placeholder="Email" />
           </Form.Item>
-          <Form.Item label="Họ và tên" name="fullName" rules={[{ required: true, message: "Hãy nhập họ và tên" }]}>
+          <Form.Item
+            label="Họ và tên"
+            name="fullName"
+            rules={[{ required: true, message: "Hãy nhập họ và tên" }]}
+          >
             <Input placeholder="Họ và tên" />
           </Form.Item>
-          <Form.Item label="Ngày sinh" name="dob" rules={[{ required: true, message: "Hãy chọn ngày sinh" }]}>
+          <Form.Item
+            label="Ngày sinh"
+            name="dob"
+            rules={[{ required: true, message: "Hãy chọn ngày sinh" }]}
+          >
             <DatePicker style={{ width: "100%" }} format="DD-MM-YYYY" />
           </Form.Item>
           <Form.Item

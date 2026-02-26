@@ -1,4 +1,3 @@
-import { Spin } from "antd";
 import classNames from "classnames/bind";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
@@ -19,7 +18,7 @@ function LoadingUi({
   return (
     <div className={cx("loadingContainer", { fullScreen })}>
       <div className={cx("loadingContent")}>
-        <div className={cx('loader')} ></div>
+        <div className={cx("loader")}></div>
       </div>
     </div>
   );

@@ -51,6 +51,7 @@ const Comment = ({ documentId, autoOpen = false }) => {
         navigate("/");
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
   const fetchComments = async (requestSize) => {
@@ -59,7 +60,7 @@ const Comment = ({ documentId, autoOpen = false }) => {
       const response = await getComments(documentId, 0, requestSize || size);
       if (response.code === 200) {
         const sortedComments = response.result.content.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
         );
 
         setComments(sortedComments);
@@ -118,7 +119,7 @@ const Comment = ({ documentId, autoOpen = false }) => {
       const res = await replies(documentId, commentId, 0, 10);
       if (res.code === 200) {
         const sortedReplies = res.result.content.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
         );
 
         setRepliesMap((prev) => ({
@@ -191,7 +192,7 @@ const Comment = ({ documentId, autoOpen = false }) => {
             // Cập nhật lại state comments và repliesMap ngay lập tức
             setComments(
               (prevComments) =>
-                prevComments.filter((comment) => comment.id !== commentId) // Xóa bình luận khỏi danh sách
+                prevComments.filter((comment) => comment.id !== commentId), // Xóa bình luận khỏi danh sách
             );
 
             // Loại bỏ bình luận đã xóa khỏi repliesMap
@@ -240,7 +241,7 @@ const Comment = ({ documentId, autoOpen = false }) => {
               </Button>
             </Tooltip>,
             <Button
-            className={cx("reply-btn")}
+              className={cx("reply-btn")}
               type="link"
               onClick={() => handleShowReplyInput(comment.id, comment.username)}
             >
@@ -296,7 +297,8 @@ const Comment = ({ documentId, autoOpen = false }) => {
         {/* Input trả lời cho bình luận cha */}
         {showReplyInputMap[comment.id] && (
           <div className={cx("reply-input")}>
-            <Input.TextArea className={cx("reply-textarea")}
+            <Input.TextArea
+              className={cx("reply-textarea")}
               value={replyInputs[comment.id] || ""}
               onChange={(e) =>
                 setReplyInputs((prev) => ({
@@ -308,7 +310,7 @@ const Comment = ({ documentId, autoOpen = false }) => {
               autoSize={{ minRows: 1, maxRows: 4 }}
             />
             <Button
-            className={cx("reply-btn")}
+              className={cx("reply-btn")}
               size="small"
               type="primary"
               icon={<SendOutlined />}

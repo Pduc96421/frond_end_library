@@ -4,7 +4,6 @@ import {
   MailOutlined,
   CalendarOutlined,
   IdcardOutlined,
-  EditOutlined,
   PhoneOutlined,
   FileOutlined,
   CheckCircleOutlined,
@@ -38,7 +37,9 @@ function Detail() {
 
       setUserData(response.result);
     } catch (error) {
-      dispatch(showAlert("Có lỗi xảy ra khi tải thông tin người dùng!", "error"));
+      dispatch(
+        showAlert("Có lỗi xảy ra khi tải thông tin người dùng!", "error"),
+      );
     } finally {
       dispatch(hideLoading());
     }
@@ -111,7 +112,12 @@ function Detail() {
       key: "actions",
       align: "center",
       render: (_, record) => (
-        <Button type="primary" size="small" icon={<DownloadOutlined />} onClick={() => handleDownloadDocument(record)}>
+        <Button
+          type="primary"
+          size="small"
+          icon={<DownloadOutlined />}
+          onClick={() => handleDownloadDocument(record)}
+        >
           Tải xuống
         </Button>
       ),
@@ -139,7 +145,11 @@ function Detail() {
         <div className={cx("personal-info")}>
           <Row gutter={[24, 24]}>
             <Col xs={24} sm={12}>
-              {renderInfoItem(<IdcardOutlined className={cx("icon-primary")} />, "Họ và tên", userData?.fullName)}
+              {renderInfoItem(
+                <IdcardOutlined className={cx("icon-primary")} />,
+                "Họ và tên",
+                userData?.fullName,
+              )}
             </Col>
             <Col xs={24} sm={12}>
               {renderInfoItem(
@@ -150,13 +160,17 @@ function Detail() {
                   {userData?.emailVerified ? (
                     <Badge
                       className={cx("verification-badge")}
-                      count={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
+                      count={
+                        <CheckCircleOutlined style={{ color: "#52c41a" }} />
+                      }
                       title="Đã xác thực"
                     />
                   ) : (
                     <Badge
                       className={cx("verification-badge")}
-                      count={<CloseCircleOutlined style={{ color: "#ff4d4f" }} />}
+                      count={
+                        <CloseCircleOutlined style={{ color: "#ff4d4f" }} />
+                      }
                       title="Chưa xác thực"
                     />
                   )}
@@ -167,17 +181,24 @@ function Detail() {
               {renderInfoItem(
                 <CalendarOutlined className={cx("icon-primary")} />,
                 "Ngày sinh",
-                userData?.dob && new Date(userData.dob).toLocaleDateString("vi-VN"),
+                userData?.dob &&
+                  new Date(userData.dob).toLocaleDateString("vi-VN"),
               )}
             </Col>
             <Col xs={24} sm={12}>
-              {renderInfoItem(<PhoneOutlined className={cx("icon-primary")} />, "Số điện thoại", userData?.phoneNumber)}
+              {renderInfoItem(
+                <PhoneOutlined className={cx("icon-primary")} />,
+                "Số điện thoại",
+                userData?.phoneNumber,
+              )}
             </Col>
             <Col xs={24} sm={12}>
               {renderInfoItem(
                 <FileOutlined className={cx("icon-primary")} />,
                 "Số lượt tải tài liệu",
-                <span className={cx("download-count")}>{userData?.documentDownload || 0}</span>,
+                <span className={cx("download-count")}>
+                  {userData?.documentDownload || 0}
+                </span>,
               )}
             </Col>
             <Col xs={24} sm={12}>
@@ -208,11 +229,15 @@ function Detail() {
                 current: userData.documents.page + 1,
                 total: userData.documents.totalElements,
                 showSizeChanger: true,
-                showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} tài liệu`,
+                showTotal: (total, range) =>
+                  `${range[0]}-${range[1]} của ${total} tài liệu`,
               }}
             />
           ) : (
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Người dùng chưa tải lên tài liệu nào" />
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Người dùng chưa tải lên tài liệu nào"
+            />
           )}
         </div>
       ),
@@ -232,7 +257,11 @@ function Detail() {
       >
         <div className={cx("user-header")}>
           <div className={cx("user-avatar")}>
-            <img className={cx("avatar-image")} src={userData?.avatarUrl} alt="Avatar" />
+            <img
+              className={cx("avatar-image")}
+              src={userData?.avatarUrl}
+              alt="Avatar"
+            />
           </div>
           <div className={cx("user-basicInfo")}>
             <h2 className={cx("fullName")}>{userData?.fullName}</h2>
@@ -271,7 +300,12 @@ function Detail() {
         </div>
 
         <div className={cx("user-detail-content")}>
-          <Tabs activeKey={activeTab} onChange={handleTabChange} items={tabItems} className={cx("detail-tabs")} />
+          <Tabs
+            activeKey={activeTab}
+            onChange={handleTabChange}
+            items={tabItems}
+            className={cx("detail-tabs")}
+          />
         </div>
       </Card>
     </div>

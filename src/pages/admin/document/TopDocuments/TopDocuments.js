@@ -1,28 +1,13 @@
-import {
-  Button,
-  Card,
-  Col,
-  Image,
-  Input,
-  Row,
-  Space,
-  Table,
-  Tooltip,
-} from "antd";
+import { Button, Card, Image, Space, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
-import {
-  EyeOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 
 import { getTopDocument } from "~/services/documentService";
 import styles from "./TopDucuments.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
-
-const { Search } = Input;
 
 function TopDocuments() {
   const [dataTopDocuments, setDataTopDocuments] = useState([]);

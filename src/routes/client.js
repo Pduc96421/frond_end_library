@@ -33,6 +33,7 @@ const publicRoutesClient = [
       {
         path: "documents",
         children: [
+          { path: ":documentId", element: <Detail /> },
           { path: "search/:keyword", element: <DocumentsSearch /> },
           { path: "search", element: <DocumentsSearch /> },
         ],
@@ -78,10 +79,7 @@ const privateRoutesClient = [
         children: [
           {
             path: "/documents",
-            children: [
-              { path: ":documentId", element: <Detail /> },
-              { path: "edit/:documentId", element: <DocumentEdit /> },
-            ],
+            children: [{ path: "edit/:documentId", element: <DocumentEdit /> }],
           },
           { path: "upload", element: <FileUploadPage /> },
           {
